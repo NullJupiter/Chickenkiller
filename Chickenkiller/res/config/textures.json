@@ -1,0 +1,46 @@
+{
+    "Textures": [
+        {
+            "name": "test-texture",
+            "file-path": "res/textures/testTexture.png",
+            "color-format": "RGBA"
+        }
+    ],
+    "TextureAtlases": [
+        {
+            "name": "test-texture-atlas",
+            "file-path": "res/textures/testSpriteSheet.png",
+            "color-format": "RGBA",
+            "row-count": 4,
+            "column-count": 9,
+
+            "animations": [
+                {
+                    "name": "player-up",
+                    "animation-row": 1,
+                    "frame-count": 7,
+                    "frame-time": 0.1   
+                },
+                {
+                    "name": "player-down",
+                    "animation-row": 2,
+                    "frame-count": 7,
+                    "frame-time": 0.1   
+                },
+                {
+                    "name": "player-right",
+                    "animation-row": 3,
+                    "frame-count": 9,
+                    "frame-time": 0.1   
+                },
+                {
+                    "name": "player-left",
+                    "animation-row": 4,
+                    "frame-count": 9,
+                    "frame-time": 0.1   
+                }
+            ]
+
+        }
+    ]
+}

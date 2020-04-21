@@ -1,0 +1,9 @@
+{
+    "Shaders": [
+        {
+            "name": "default",
+            "vertex-file-path": "res/shaders/DefaultShader.vert",
+            "fragment-file-path": "res/shaders/DefaultShader.frag"
+        }
+    ]
+}
