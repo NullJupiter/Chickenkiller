@@ -1,6 +1,6 @@
 #include "GameLayer.h"
 
-#include "Application.h"
+#include "App.h"
 
 GameLayer::GameLayer()
 {
@@ -11,7 +11,7 @@ GameLayer::GameLayer()
 void GameLayer::OnAttach()
 {
 	LOG("[*] Game Layer Attached!");
-
+	
 	// create camera
 	mCamera = Asylum::OrthographicCamera(0.0f, (float)Asylum::Window::Get()->GetWidth(), 0.0f, (float)Asylum::Window::Get()->GetHeight(), -100.0f, 100.0f);
 	mDefaultShader->Bind();

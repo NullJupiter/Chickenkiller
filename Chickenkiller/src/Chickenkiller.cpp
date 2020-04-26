@@ -1,18 +1,15 @@
-#include "Application.h"
+#include "App.h"
 
 int main() 
 {
-	// get the application
-	Application* app = Application::Get();
-
-	// initialize the application
-	app->Init();
+	// create application
+	App* app = new App();
 
 	// run the application
 	app->Run();
 
-	// shut down the application
-	app->Shutdown();
+	// delete the application
+	delete app;
 
 	return 0;
 }

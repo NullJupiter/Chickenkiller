@@ -6,6 +6,7 @@
 #include "Core/LayerStack.h"
 #include "Core/Input.h"
 #include "Core/ResourceManager.h"
+#include "Core/Application.h"
 
 // Graphics
 #include "Graphics/Window.h"
