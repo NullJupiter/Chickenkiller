@@ -1,0 +1,3 @@
+[submodule "Asylum/vendor/GLFW"]
+	path = Asylum/vendor/GLFW
+	url = https://github.com/NullJupiter/glfw

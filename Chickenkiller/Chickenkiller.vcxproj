@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|x64">
@@ -9,10 +9,15 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
+    <ProjectConfiguration Include="Dist|x64">
+      <Configuration>Dist</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <VCProjectVersion>16.0</VCProjectVersion>
-    <ProjectGuid>{E86C0204-25D3-4D3B-A67E-3CF8D33A0D08}</ProjectGuid>
+    <ProjectGuid>{DDA59853-4966-148A-12A1-5D077E205966}</ProjectGuid>
+    <IgnoreWarnCompileDuplicatedFilename>true</IgnoreWarnCompileDuplicatedFilename>
+    <Keyword>Win32Proj</Keyword>
     <RootNamespace>Chickenkiller</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -20,20 +25,23 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>true</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
-    <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Label="Shared">
   </ImportGroup>
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
@@ -41,94 +49,104 @@
   <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <OutDir>$(SolutionDir)/bin/$(Configuration)/</OutDir>
-    <IntDir>$(SolutionDir)/bin-int/$(Configuration)/</IntDir>
+    <OutDir>..\bin\Debug-windows-x86_64\Chickenkiller\</OutDir>
+    <IntDir>..\bin-int\Debug-windows-x86_64\Chickenkiller\</IntDir>
+    <TargetName>Chickenkiller</TargetName>
+    <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <OutDir>$(SolutionDir)/bin/$(Configuration)/</OutDir>
-    <IntDir>$(SolutionDir)/bin-int/$(Configuration)/</IntDir>
+    <OutDir>..\bin\Release-windows-x86_64\Chickenkiller\</OutDir>
+    <IntDir>..\bin-int\Release-windows-x86_64\Chickenkiller\</IntDir>
+    <TargetName>Chickenkiller</TargetName>
+    <TargetExt>.exe</TargetExt>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>..\bin\Dist-windows-x86_64\Chickenkiller\</OutDir>
+    <IntDir>..\bin-int\Dist-windows-x86_64\Chickenkiller\</IntDir>
+    <TargetName>Chickenkiller</TargetName>
+    <TargetExt>.exe</TargetExt>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)/src/;$(ProjectDir)/vendor/include;%(AdditionalIncludeDirectories)$(ProjectDir)/src/;$(ProjectDir)/vendor/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PrecompiledHeader>Create</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <PreprocessorDefinitions>AM_PLATFORM_WINDOWS;AM_DEBUG;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Asylum\src;src;..\Asylum\vendor\GLFW\include;..\Asylum\vendor\glm;..\Asylum\vendor\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <Optimization>Disabled</Optimization>
+      <MinimalRebuild>false</MinimalRebuild>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)/vendor/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;Glad.lib;%(AdditionalDependencies)opengl32.lib;glfw3.lib;Glad.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>AM_PLATFORM_WINDOWS;AM_RELEASE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Asylum\src;src;..\Asylum\vendor\GLFW\include;..\Asylum\vendor\glm;..\Asylum\vendor\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>NDEBUG;_CONSOLE;_CRT_SECURE_NO_WARNINGS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)/src/;$(ProjectDir)/vendor/include;%(AdditionalIncludeDirectories)$(ProjectDir)/src/;$(ProjectDir)/vendor/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PrecompiledHeader>Create</PrecompiledHeader>
-      <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
       <LanguageStandard>stdcpp17</LanguageStandard>
-      <InlineFunctionExpansion>Default</InlineFunctionExpansion>
-      <FavorSizeOrSpeed>Neither</FavorSizeOrSpeed>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(ProjectDir)/vendor/lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glfw3.lib;Glad.lib;%(AdditionalDependencies)opengl32.lib;glfw3.lib;Glad.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Dist|x64'">
+    <ClCompile>
+      <PrecompiledHeader>NotUsing</PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <PreprocessorDefinitions>AM_PLATFORM_WINDOWS;AM_DIST;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\Asylum\src;src;..\Asylum\vendor\GLFW\include;..\Asylum\vendor\glm;..\Asylum\vendor\json\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <Optimization>Full</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <MinimalRebuild>false</MinimalRebuild>
+      <StringPooling>true</StringPooling>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <LanguageStandard>stdcpp17</LanguageStandard>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\Engine\Core\LayerStack.cpp" />
-    <ClCompile Include="src\Engine\Core\ResourceManager.cpp" />
-    <ClCompile Include="src\Engine\Graphics\Animation.cpp" />
-    <ClCompile Include="src\Engine\Graphics\OrthographicCamera.cpp" />
-    <ClCompile Include="src\Engine\Graphics\Renderer.cpp" />
-    <ClCompile Include="src\Engine\Graphics\Shader.cpp" />
-    <ClCompile Include="src\Engine\Graphics\Texture.cpp" />
-    <ClCompile Include="src\Engine\Graphics\Window.cpp" />
-    <ClCompile Include="src\Engine\Utils\Utils.cpp" />
-    <ClCompile Include="src\Game\Application.cpp" />
-    <ClCompile Include="src\Game\Chickenkiller.cpp" />
-    <ClCompile Include="src\Game\Layers\GameLayer.cpp" />
+    <ClInclude Include="src\Application.h" />
+    <ClInclude Include="src\Layers\GameLayer.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Engine\Core\Input.h" />
-    <ClInclude Include="src\Engine\Core\Layer.h" />
-    <ClInclude Include="src\Engine\Core\LayerStack.h" />
-    <ClInclude Include="src\Engine\Core\Log.h" />
-    <ClInclude Include="src\Engine\Core\ResourceManager.h" />
-    <ClInclude Include="src\Engine\Engine.h" />
-    <ClInclude Include="src\Engine\Graphics\Animation.h" />
-    <ClInclude Include="src\Engine\Graphics\OrthographicCamera.h" />
-    <ClInclude Include="src\Engine\Graphics\Renderer.h" />
-    <ClInclude Include="src\Engine\Graphics\Shader.h" />
-    <ClInclude Include="src\Engine\Graphics\Texture.h" />
-    <ClInclude Include="src\Engine\Graphics\Window.h" />
-    <ClInclude Include="src\Engine\Utils\Utils.h" />
-    <ClInclude Include="src\Game\Application.h" />
-    <ClInclude Include="src\Game\Layers\GameLayer.h" />
-    <ClInclude Include="src\pch.h" />
+    <ClCompile Include="src\Application.cpp" />
+    <ClCompile Include="src\Chickenkiller.cpp" />
+    <ClCompile Include="src\Layers\GameLayer.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="res\shader\DefaultShader.frag.glsl" />
-    <None Include="res\shader\DefaultShader.vert.glsl" />
+    <ProjectReference Include="..\Asylum\Asylum.vcxproj">
+      <Project>{608CE3A7-4C2E-0E7E-35E9-21D2212A95CE}</Project>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
