@@ -19,9 +19,6 @@ namespace Asylum {
 		}
 	};
 
-#define MAX_KEYS 1024
-#define MAX_MOUSE_BUTTONS 32
-
 	class Window
 	{
 	private:
