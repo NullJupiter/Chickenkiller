@@ -74,6 +74,7 @@ project "Asylum"
 		systemversion "latest"
 
 		defines {
+			"AM_PLATFORM_WINDOWS",
 			"GLFW_INCLUDE_NONE"
 		}
 
@@ -123,7 +124,6 @@ project "Chickenkiller"
 
 	filter "system:windows"
 		systemversion "latest"
-
 		defines {
 			"AM_PLATFORM_WINDOWS"
 		}
@@ -135,10 +135,12 @@ project "Chickenkiller"
 
 	filter "configurations:Release"
 		defines "AM_RELEASE"
+		kind "WindowedApp"
 		runtime "Release"
 		optimize "on"
 
 	filter "configurations:Dist"
 		defines "AM_DIST"
+		kind "WindowedApp"
 		runtime "Release"
 		optimize "on"

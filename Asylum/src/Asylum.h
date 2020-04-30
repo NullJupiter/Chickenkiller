@@ -5,6 +5,8 @@
 #include "Core/Log.h"
 #include "Core/LayerStack.h"
 #include "Core/Input.h"
+#include "Core/KeyCodes.h"
+#include "Core/MouseButtonCodes.h"
 #include "Core/ResourceManager.h"
 #include "Core/Application.h"
 
@@ -12,7 +14,7 @@
 #include "Graphics/Window.h"
 #include "Graphics/Renderer.h"
 #include "Graphics/Shader.h"
-#include "Graphics/OrthographicCamera.h"
+#include "Graphics/OrthographicCameraController.h"
 #include "Graphics/Animation.h"
 
 // Utils

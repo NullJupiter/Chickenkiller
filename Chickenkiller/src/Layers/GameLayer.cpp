@@ -6,24 +6,22 @@ GameLayer::GameLayer()
 {
 	// get default shader
 	mDefaultShader = Asylum::ResourceManager::GetShader("default");
+	
 }
 
 void GameLayer::OnAttach()
 {
 	LOG("[*] Game Layer Attached!");
 	
-	// create camera
-	mCamera = Asylum::OrthographicCamera(0.0f, (float)Asylum::Window::Get()->GetWidth(), 0.0f, (float)Asylum::Window::Get()->GetHeight(), -100.0f, 100.0f);
+	// create camera controller
+	mCameraController = std::make_unique<Asylum::OrthographicCameraController>(16.0f / 9.0f, true);
+	
+	// set matrices
 	mDefaultShader->Bind();
-	mDefaultShader->SetUniformMat4("uProjection", mCamera.GetProjectionMatrix());
+	mDefaultShader->SetUniformMat4("uViewProjection", mCameraController->GetCamera().GetViewProjectionMatrix());
 
 	// get test texture
 	mTestTexture = Asylum::ResourceManager::GetTexture("test-texture");
-	
-	mTestAnimations.push_back(Asylum::ResourceManager::GetAnimation("player-up"));
-	mTestAnimations.push_back(Asylum::ResourceManager::GetAnimation("player-down"));
-	mTestAnimations.push_back(Asylum::ResourceManager::GetAnimation("player-right"));
-	mTestAnimations.push_back(Asylum::ResourceManager::GetAnimation("player-left"));
 }
 
 void GameLayer::OnUpdate(float dt)
@@ -31,38 +29,31 @@ void GameLayer::OnUpdate(float dt)
 	// bind shader
 	mDefaultShader->Bind();
 
+	static auto testAnimation = Asylum::ResourceManager::GetAnimation("player-right");
+
 	// updating
 	{
-		// camera controls
-		if (Asylum::Input::IsKeyPressed(GLFW_KEY_Q))
-			mCamera.SetRotation(mCamera.GetRotation() - 50.0f * dt);
-		if (Asylum::Input::IsKeyPressed(GLFW_KEY_E))
-			mCamera.SetRotation(mCamera.GetRotation() + 50.0f * dt);
-		if (Asylum::Input::IsKeyPressed(GLFW_KEY_W))
-			mCamera.SetPosition(mCamera.GetPosition() + glm::vec3(0.0f, 500.0f * dt, 0.0f));
-		if (Asylum::Input::IsKeyPressed(GLFW_KEY_S))
-			mCamera.SetPosition(mCamera.GetPosition() - glm::vec3(0.0f, 500.0f * dt, 0.0f));
-		if (Asylum::Input::IsKeyPressed(GLFW_KEY_A))
-			mCamera.SetPosition(mCamera.GetPosition() - glm::vec3(500.0f * dt, 0.0f, 0.0f));
-		if (Asylum::Input::IsKeyPressed(GLFW_KEY_D))
-			mCamera.SetPosition(mCamera.GetPosition() + glm::vec3(500.0f * dt, 0.0f, 0.0f));
-		
-		// update view matrix
-		mDefaultShader->SetUniformMat4("uView", mCamera.GetViewMatrix());
+		// update the camera controller
+		mCameraController->OnUpdate(dt);
 
-		// update test animation
-		for (auto& animation : mTestAnimations)
-			animation->OnUpdate(dt);
+		// update view projection matrix
+		mDefaultShader->SetUniformMat4("uViewProjection", mCameraController->GetCamera().GetViewProjectionMatrix());
+
+		testAnimation->OnUpdate(dt);
 	}
 
 	// rendering
 	{
 		Asylum::Renderer::BeginDraw();
 
-		for (uint32_t i = 0; i < mTestAnimations.size(); i++)
-			Asylum::Renderer::DrawAnimatedRect({ i*150.0f + 30.0f, 300.0f }, { 122.22f, 122.25f }, 20.0f, mTestAnimations[i]);
+		Asylum::Renderer::DrawColoredRect({ 0.0f, 0.0f }, { 1.0f, 1.0f }, { 255,255,255,255 });
+		Asylum::Renderer::DrawRotatedColoredRect({ 0.5f, 2.5f }, { 1.0f, 1.0f }, { 200, 100, 255, 255 }, glm::radians((float)glfwGetTime()*100.0f));
 
-		Asylum::Renderer::DrawTexturedRect({ 700.0f, 300.0f }, { 350.0f, 150.0f }, Asylum::ResourceManager::GetTextureAtlas("test-texture-atlas")->GetID());
+		Asylum::Renderer::DrawTexturedRect({ 2.0f, 0.0f }, { 1.0f, 1.0f }, mTestTexture);
+		Asylum::Renderer::DrawRotatedTexturedRect({ 2.5f, 2.5f }, { 1.0f, 1.0f }, mTestTexture, glm::radians((float)glfwGetTime()*100.0f));
+
+		Asylum::Renderer::DrawAnimatedRect({ 4.0f, 0.0f }, { 1.0f, 1.0f }, testAnimation);
+		Asylum::Renderer::DrawRotatedAnimatedRect({ 4.5f, 2.5f }, { 1.0f, 1.0f }, glm::radians((float)glfwGetTime() * 100.0f), testAnimation);
 
 		Asylum::Renderer::EndDraw();
 	}

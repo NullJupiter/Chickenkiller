@@ -36,7 +36,7 @@ namespace Asylum {
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 		glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 		glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
-#ifdef PLATFORM_DARWIN
+#ifdef AM_PLATFORM_DARWIN
 		glfwWindowHint(GLFW_OPENGL_FORWARD_COMPAT, GLFW_TRUE);
 #endif
 
@@ -78,6 +78,14 @@ namespace Asylum {
 				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 				data.Width = width;
 				data.Height = height;
+
+				for (auto& fn : data.WindowResizeCallbacks)
+					fn(width, height);
+			});
+
+		glfwSetFramebufferSizeCallback(mWindow, [](GLFWwindow* window, int width, int height)
+			{
+				glViewport(0, 0, width, height);
 			});
 
 		glfwSetWindowCloseCallback(mWindow, [](GLFWwindow* window)
@@ -132,6 +140,18 @@ namespace Asylum {
 	{
 		mData.VSync = enabled;
 		glfwSwapInterval(enabled);
+	}
+
+	void Window::SetFullscreenMode()
+	{
+		GLFWmonitor* monitor = glfwGetPrimaryMonitor();
+		const GLFWvidmode* mode = glfwGetVideoMode(monitor);
+		glfwSetWindowMonitor(mWindow, monitor, 0, 0, mode->width, mode->height, mode->refreshRate);
+	}
+
+	void Window::SetWindowedMode(uint32_t xpos, uint32_t ypos, uint32_t width, uint32_t height)
+	{
+		glfwSetWindowMonitor(mWindow, NULL, xpos, ypos, width, height, 0);
 	}
 
 }

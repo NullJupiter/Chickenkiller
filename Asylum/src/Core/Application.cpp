@@ -12,7 +12,6 @@ namespace Asylum {
 		mWindow = Window::Get();
 		mWindow->Init(WindowProps("Asylum Engine"));
 		mWindow->SetClearColor(45, 57, 68);
-		mWindow->SetVSync(false);
 
 		// init renderer
 		Renderer::Init();

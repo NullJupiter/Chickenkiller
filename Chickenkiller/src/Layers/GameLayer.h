@@ -6,15 +6,13 @@ class GameLayer : public Asylum::Layer
 {
 private:
 	// camera
-	Asylum::OrthographicCamera mCamera;
+	std::unique_ptr<Asylum::OrthographicCameraController> mCameraController;
 
 	// shader
 	std::shared_ptr<Asylum::Shader> mDefaultShader;
 
 	// textures
 	std::shared_ptr<Asylum::Texture> mTestTexture;
-
-	std::vector<std::shared_ptr<Asylum::Animation>> mTestAnimations;
 public:
 	GameLayer();
 

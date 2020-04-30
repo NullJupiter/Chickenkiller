@@ -10,10 +10,6 @@ namespace Asylum {
 	class Application
 	{
 	private:
-		// core graphics
-		Window* mWindow;
-
-
 		// delta time calc
 		float mLastFrameTime = 0.0f;
 		float mDeltaTime = 0.0f;
@@ -22,6 +18,9 @@ namespace Asylum {
 		int mFpsCounter = 0;
 		float mFpsTimer = 0.0f;
 	protected:
+		// core graphics
+		Window* mWindow;
+
 		LayerStack* mLayerStack;
 	public:
 		Application() { Init(); };

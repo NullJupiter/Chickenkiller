@@ -36,8 +36,10 @@ namespace Asylum {
 			bool VSync = true;
 			bool IsClosed = false;
 
+			// event callbacks
 			std::vector<std::function<void(float, float)>> ScrollCallbacks;
 			std::vector<std::function<void(int)>> KeyPressedCallbacks;
+			std::vector<std::function<void(int, int)>> WindowResizeCallbacks;
 		};
 
 		WindowData mData;
@@ -53,6 +55,7 @@ namespace Asylum {
 
 		inline void AddScrollCallback(std::function<void(float, float)> callback) { mData.ScrollCallbacks.push_back(callback); };
 		inline void AddKeyPressedCallback(std::function<void(int)> callback) { mData.KeyPressedCallbacks.push_back(callback); };
+		inline void AddWindowResizeCallback(std::function<void(int, int)> callback) { mData.WindowResizeCallbacks.push_back(callback); };
 
 		inline uint32_t GetWidth() const { return mData.Width; };
 		inline uint32_t GetHeight() const { return mData.Height; };
@@ -64,6 +67,11 @@ namespace Asylum {
 		inline bool IsVSync() const { return mData.VSync; };
 
 		inline GLFWwindow* GetNativeWindow() { return mWindow; };
+
+		inline void SetWindowTitle(const std::string& title) { glfwSetWindowTitle(mWindow, title.c_str()); };
+		inline void SetWindowSize(uint32_t width, uint32_t height) { glfwSetWindowSize(mWindow, (int)width, (int)height); };
+		void SetFullscreenMode();
+		void SetWindowedMode(uint32_t xpos, uint32_t ypos, uint32_t width, uint32_t height);
 
 	private:
 		Window() : mWindow(nullptr) {};

@@ -226,7 +226,7 @@ namespace Asylum {
 
 		// create a transformation matrix
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), {position.x, position.y, zDepth});
-		transform = glm::rotate(transform, glm::radians(angle), { 0.0f, 0.0f, 1.0f });
+		transform = glm::rotate(transform, angle, { 0.0f, 0.0f, 1.0f });
 		transform = glm::scale(transform, { size.x, size.y, 0.0f });
 
 		// insert vertex data into the CPU vertex buffer
@@ -258,7 +258,7 @@ namespace Asylum {
 		sRendererData.IndicesCount += 6;
 	}
 
-	void Renderer::DrawTexturedRectImpl(const glm::vec2& position, const glm::vec2& size, uint32_t textureID, float zDepth, const glm::vec3& tint)
+	void Renderer::DrawTexturedRectImpl(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float zDepth, const glm::vec3& tint)
 	{
 		// check if the maximum amount of indices is being used or all texture slots are being used
 		// if this happens we end the batch, trigger a draw call and begin a new batch
@@ -270,6 +270,8 @@ namespace Asylum {
 
 		// convert the tint color from rgb 0-255 to 0-1
 		const glm::vec4 rectTint = { tint.r / 255.0f, tint.g / 255.0f, tint.b / 255.0f, 1.0f };
+
+		const uint32_t textureID = texture->GetID();
 
 		// check if the texture we want to draw is already being used
 		// if so use the same texture slot (so we don't waste texture slots)
@@ -321,7 +323,7 @@ namespace Asylum {
 		sRendererData.IndicesCount += 6;
 	}
 
-	void Renderer::DrawRotatedTexturedRectImpl(const glm::vec2& position, const glm::vec2& size, uint32_t textureID, float zDepth, const glm::vec3& tint, float angle)
+	void Renderer::DrawRotatedTexturedRectImpl(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float zDepth, const glm::vec3& tint, float angle)
 	{
 		// check if the maximum amount of indices is being used or all texture slots are being used
 		// if this happens we end the batch, trigger a draw call and begin a new batch
@@ -333,6 +335,8 @@ namespace Asylum {
 
 		// convert the tint color from rgb 0-255 to 0-1
 		const glm::vec4 rectTint = { tint.r / 255.0f, tint.g / 255.0f, tint.b / 255.0f, 1.0f };
+
+		const uint32_t textureID = texture->GetID();
 
 		// check if the texture we want to draw is already being used
 		// if so use the same texture slot (so we don't waste texture slots)
@@ -357,7 +361,7 @@ namespace Asylum {
 
 		// create a transformation matrix
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), { position.x, position.y, zDepth });
-		transform = glm::rotate(transform, glm::radians(angle), { 0.0f, 0.0f, 1.0f });
+		transform = glm::rotate(transform, angle, { 0.0f, 0.0f, 1.0f });
 		transform = glm::scale(transform, { size.x, size.y, 0.0f });
 
 		// insert vertex data into the CPU vertex buffer
@@ -403,7 +407,7 @@ namespace Asylum {
 		// convert the tint color from rgb 0-255 to 0-1
 		const glm::vec4 rectTint = { tint.r / 255.0f, tint.g / 255.0f, tint.b / 255.0f, 1.0f };
 
-		uint32_t textureID = animation->GetTextureID();
+		const uint32_t textureID = animation->GetTextureID();
 
 		// check if the texture we want to draw is already being used
 		// if so use the same texture slot (so we don't waste texture slots)
@@ -470,7 +474,7 @@ namespace Asylum {
 		// convert the tint color from rgb 0-255 to 0-1
 		const glm::vec4 rectTint = { tint.r / 255.0f, tint.g / 255.0f, tint.b / 255.0f, 1.0f };
 
-		uint32_t textureID = animation->GetTextureID();
+		const uint32_t textureID = animation->GetTextureID();
 
 		// check if the texture we want to draw is already being used
 		// if so use the same texture slot (so we don't waste texture slots)
@@ -495,7 +499,7 @@ namespace Asylum {
 
 		// create a transformation matrix
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), { position.x, position.y, zDepth });
-		transform = glm::rotate(transform, glm::radians(angle), { 0.0f, 0.0f, 1.0f });
+		transform = glm::rotate(transform, angle, { 0.0f, 0.0f, 1.0f });
 		transform = glm::scale(transform, { size.x, size.y, 0.0f });
 
 		const std::vector<glm::vec2> texCoords = animation->GetCurrentTextureCoords();
@@ -554,45 +558,45 @@ namespace Asylum {
 	}
 
 	// texture rect calls
-	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, uint32_t textureID)
+	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture)
 	{
-		DrawTexturedRectImpl(position, size, textureID, 0.0f, { 255, 255, 255 });
+		DrawTexturedRectImpl(position, size, texture, 0.0f, { 255, 255, 255 });
 	}
 
-	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, uint32_t textureID, float zDepth)
+	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float zDepth)
 	{
-		DrawTexturedRectImpl(position, size, textureID, zDepth, { 255, 255, 255 });
+		DrawTexturedRectImpl(position, size, texture, zDepth, { 255, 255, 255 });
 	}
 
-	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, uint32_t textureID, const glm::vec3& tint)
+	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, const glm::vec3& tint)
 	{
-		DrawTexturedRectImpl(position, size, textureID, 0.0f, tint);
+		DrawTexturedRectImpl(position, size, texture, 0.0f, tint);
 	}
 
-	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, uint32_t textureID, float zDepth, const glm::vec3& tint)
+	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float zDepth, const glm::vec3& tint)
 	{
-		DrawTexturedRectImpl(position, size, textureID, zDepth, tint);
+		DrawTexturedRectImpl(position, size, texture, zDepth, tint);
 	}
 
 	// rotated textured rect calls
-	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, uint32_t textureID, float angle)
+	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float angle)
 	{
-		DrawRotatedTexturedRectImpl(position, size, textureID, 0.0f, { 255,255,255 }, angle);
+		DrawRotatedTexturedRectImpl(position, size, texture, 0.0f, { 255,255,255 }, angle);
 	}
 
-	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, uint32_t textureID, float angle, float zDepth)
+	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float angle, float zDepth)
 	{
-		DrawRotatedTexturedRectImpl(position, size, textureID, zDepth, { 255,255,255 }, angle);
+		DrawRotatedTexturedRectImpl(position, size, texture, zDepth, { 255,255,255 }, angle);
 	}
 
-	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, uint32_t textureID, float angle, const glm::vec3& tint)
+	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float angle, const glm::vec3& tint)
 	{
-		DrawRotatedTexturedRectImpl(position, size, textureID, 0.0f, tint, angle);
+		DrawRotatedTexturedRectImpl(position, size, texture, 0.0f, tint, angle);
 	}
 
-	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, uint32_t textureID, float angle, float zDepth, const glm::vec3& tint)
+	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float angle, float zDepth, const glm::vec3& tint)
 	{
-		DrawRotatedTexturedRectImpl(position, size, textureID, zDepth, tint, angle);
+		DrawRotatedTexturedRectImpl(position, size, texture, zDepth, tint, angle);
 	}
 
 	// animated rect calls
