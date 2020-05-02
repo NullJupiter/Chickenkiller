@@ -9,6 +9,7 @@
 #include "Core/MouseButtonCodes.h"
 #include "Core/ResourceManager.h"
 #include "Core/Application.h"
+#include "Core/Entity/EntitySystem.h"
 
 // Graphics
 #include "Graphics/Window.h"
@@ -19,5 +20,6 @@
 
 // Utils
 #include "Utils/Utils.h"
+#include <memory>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>

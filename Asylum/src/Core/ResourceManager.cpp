@@ -101,6 +101,16 @@ namespace Asylum {
 		return sResouceManagerData.Shaders[name];
 	}
 
+	std::vector<std::shared_ptr<Shader>> ResourceManager::GetAllShaders()
+	{
+		std::vector<std::shared_ptr<Shader>> allShaders;
+		allShaders.reserve(sResouceManagerData.Shaders.size());
+		for (auto& shaderData : sResouceManagerData.Shaders)
+			allShaders.push_back(shaderData.second);
+
+		return allShaders;
+	}
+
 	std::shared_ptr<Texture> ResourceManager::GetTexture(const std::string& name)
 	{
 		return sResouceManagerData.Textures[name];

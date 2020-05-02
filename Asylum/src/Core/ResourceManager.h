@@ -16,6 +16,7 @@ namespace Asylum {
 
 		// getter
 		static std::shared_ptr<Shader> GetShader(const std::string& name);
+		static std::vector<std::shared_ptr<Shader>> GetAllShaders();
 		static std::shared_ptr<Texture> GetTexture(const std::string& name);
 		static std::shared_ptr<TextureAtlas> GetTextureAtlas(const std::string& name);
 		static std::shared_ptr<Animation> GetAnimation(const std::string& name);

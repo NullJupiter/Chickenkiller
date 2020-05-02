@@ -3,6 +3,7 @@
 
 #include "Graphics/Renderer.h"
 #include "Core/ResourceManager.h"
+#include "Core/Entity/EntitySystem.h"
 
 namespace Asylum {
 
@@ -18,6 +19,9 @@ namespace Asylum {
 
 		// load resources
 		ResourceManager::LoadResources("res/config");
+
+		// init entity system
+		EntitySystem::Init();
 
 		// load shader
 		std::shared_ptr<Shader> defaultShader = ResourceManager::GetShader("default");

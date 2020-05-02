@@ -2,10 +2,12 @@
 
 #include "App.h"
 
+// include all entities
+#include "Entities/Player.h"
+#include "Entities/Enemy.h"
+
 GameLayer::GameLayer()
 {
-	// get default shader
-	mDefaultShader = Asylum::ResourceManager::GetShader("default");
 	
 }
 
@@ -15,47 +17,39 @@ void GameLayer::OnAttach()
 	
 	// create camera controller
 	mCameraController = std::make_unique<Asylum::OrthographicCameraController>(16.0f / 9.0f, true);
-	
-	// set matrices
-	mDefaultShader->Bind();
-	mDefaultShader->SetUniformMat4("uViewProjection", mCameraController->GetCamera().GetViewProjectionMatrix());
 
-	// get test texture
-	mTestTexture = Asylum::ResourceManager::GetTexture("test-texture");
+	// register all entities
+	Asylum::EntitySystem::RegisterEntity(Asylum::EntityData("Player", std::make_shared<Player>(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f)), "default"));
+	Asylum::EntitySystem::RegisterEntity(Asylum::EntityData("Enemy", std::make_shared<Enemy>(glm::vec2(2.0f, 0.0f), glm::vec2(1.0f, 1.0f)), "default"));
+
+	Asylum::Input::AddKeyPressedCallback([this](int keycode)
+		{
+			if (keycode == AM_KEY_F1)
+			{
+				Asylum::EntitySystem::SetEntityShader("Player", Asylum::ResourceManager::GetShader("red"));
+			}
+			else if (keycode == AM_KEY_F2)
+			{
+				Asylum::EntitySystem::SetEntityShader("Player", Asylum::ResourceManager::GetShader("default"));
+			}
+		});
 }
 
 void GameLayer::OnUpdate(float dt)
 {
-	// bind shader
-	mDefaultShader->Bind();
-
-	static auto testAnimation = Asylum::ResourceManager::GetAnimation("player-right");
-
 	// updating
 	{
 		// update the camera controller
 		mCameraController->OnUpdate(dt);
 
-		// update view projection matrix
-		mDefaultShader->SetUniformMat4("uViewProjection", mCameraController->GetCamera().GetViewProjectionMatrix());
-
-		testAnimation->OnUpdate(dt);
+		// update all entities
+		Asylum::EntitySystem::OnUpdate(dt);
 	}
 
 	// rendering
 	{
-		Asylum::Renderer::BeginDraw();
-
-		Asylum::Renderer::DrawColoredRect({ 0.0f, 0.0f }, { 1.0f, 1.0f }, { 255,255,255,255 });
-		Asylum::Renderer::DrawRotatedColoredRect({ 0.5f, 2.5f }, { 1.0f, 1.0f }, { 200, 100, 255, 255 }, glm::radians((float)glfwGetTime()*100.0f));
-
-		Asylum::Renderer::DrawTexturedRect({ 2.0f, 0.0f }, { 1.0f, 1.0f }, mTestTexture);
-		Asylum::Renderer::DrawRotatedTexturedRect({ 2.5f, 2.5f }, { 1.0f, 1.0f }, mTestTexture, glm::radians((float)glfwGetTime()*100.0f));
-
-		Asylum::Renderer::DrawAnimatedRect({ 4.0f, 0.0f }, { 1.0f, 1.0f }, testAnimation);
-		Asylum::Renderer::DrawRotatedAnimatedRect({ 4.5f, 2.5f }, { 1.0f, 1.0f }, glm::radians((float)glfwGetTime() * 100.0f), testAnimation);
-
-		Asylum::Renderer::EndDraw();
+		// render all entities
+		Asylum::EntitySystem::OnRender(mCameraController);
 	}
 }
 
