@@ -1,3 +1,6 @@
 [submodule "Asylum/vendor/GLFW"]
 	path = Asylum/vendor/GLFW
 	url = https://github.com/NullJupiter/glfw
+[submodule "Asylum/vendor/imgui"]
+	path = Asylum/vendor/imgui
+	url = https://github.com/ocornut/imgui
