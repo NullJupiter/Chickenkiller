@@ -15,11 +15,11 @@ namespace Asylum {
 		static void UnloadResources();
 
 		// getter
-		static std::shared_ptr<Shader> GetShader(const std::string& name);
-		static std::vector<std::shared_ptr<Shader>> GetAllShaders();
-		static std::shared_ptr<Texture> GetTexture(const std::string& name);
-		static std::shared_ptr<TextureAtlas> GetTextureAtlas(const std::string& name);
-		static std::shared_ptr<Animation> GetAnimation(const std::string& name);
+		static Ref<Shader> GetShader(const std::string& name);
+		static std::vector<Ref<Shader>> GetAllShaders();
+		static Ref<Texture> GetTexture(const std::string& name);
+		static Ref<TextureAtlas> GetTextureAtlas(const std::string& name);
+		static Ref<Animation> GetAnimation(const std::string& name);
 	};
 
 }

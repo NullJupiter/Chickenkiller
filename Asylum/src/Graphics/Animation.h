@@ -8,7 +8,7 @@ namespace Asylum {
 	class Animation
 	{
 	private:
-		std::shared_ptr<TextureAtlas> mCorrespondingTextureAtlas;
+		Ref<TextureAtlas> mCorrespondingTextureAtlas;
 		uint32_t mAnimationRow;
 
 
@@ -23,7 +23,7 @@ namespace Asylum {
 		glm::vec2 mTextureSize;
 		glm::vec2 mFrameSize;
 	public:
-		Animation(std::shared_ptr<TextureAtlas> correspondingTextureAtlas, uint32_t animationRow, uint32_t frameCount, float frameTime);
+		Animation(Ref<TextureAtlas> correspondingTextureAtlas, uint32_t animationRow, uint32_t frameCount, float frameTime);
 		~Animation() = default;
 
 		void OnUpdate(float dt);

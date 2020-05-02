@@ -13,4 +13,6 @@ public:
 	virtual void OnStartup() override;
 	virtual void OnShutdown() override;
 	virtual void OnUpdate(float dt) override;
+private:
+	void OnKeyPressed(int keycode);
 };

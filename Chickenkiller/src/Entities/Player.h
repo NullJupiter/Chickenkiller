@@ -5,7 +5,7 @@
 class Player : public Asylum::Entity
 {
 private:
-	std::shared_ptr<Asylum::Animation> mWalkAnimation;
+	Asylum::Ref<Asylum::Animation> mWalkAnimation;
 public:
 	Player(const glm::vec2& position, const glm::vec2& size);
 

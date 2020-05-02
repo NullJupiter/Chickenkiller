@@ -6,10 +6,10 @@ namespace Asylum {
 	struct ResourceManagerData
 	{
 		// data
-		std::unordered_map<std::string, std::shared_ptr<Shader>> Shaders;
-		std::unordered_map<std::string, std::shared_ptr<Texture>> Textures;
-		std::unordered_map<std::string, std::shared_ptr<TextureAtlas>> TextureAtlases;
-		std::unordered_map<std::string, std::shared_ptr<Animation>> Animations;
+		std::unordered_map<std::string, Ref<Shader>> Shaders;
+		std::unordered_map<std::string, Ref<Texture>> Textures;
+		std::unordered_map<std::string, Ref<TextureAtlas>> TextureAtlases;
+		std::unordered_map<std::string, Ref<Animation>> Animations;
 	};
 
 	static ResourceManagerData sResouceManagerData;
@@ -41,7 +41,7 @@ namespace Asylum {
 						std::string fragmentShaderPath = valueObject["fragment-file-path"].get<std::string>();
 
 						// create new shader and store it in unordered_map
-						sResouceManagerData.Shaders[name] = std::make_shared<Shader>(vertexShaderPath, fragmentShaderPath);
+						sResouceManagerData.Shaders[name] = CreateRef<Shader>(vertexShaderPath, fragmentShaderPath);
 					}
 
 					// check if current subobject is under the category of "Textures"
@@ -53,7 +53,7 @@ namespace Asylum {
 						uint32_t colorFormat = valueObject["color-format"] == "RGBA" ? GL_RGBA : GL_RGB;
 
 						// create new shader and store it in unordered_map
-						sResouceManagerData.Textures[name] = std::make_shared<Texture>(textureFilePath.c_str(), colorFormat);
+						sResouceManagerData.Textures[name] = CreateRef<Texture>(textureFilePath.c_str(), colorFormat);
 					}
 
 					// check if current subobject is under the category of "TextureAtlases"
@@ -67,7 +67,7 @@ namespace Asylum {
 						uint32_t columnCount = valueObject["column-count"].get<uint32_t>();
 
 						// create new texture atlas and store it in unordered_map
-						sResouceManagerData.TextureAtlases[textureAtlasName] = std::make_shared<TextureAtlas>(textureFilePath.c_str(), colorFormat, rowCount, columnCount);
+						sResouceManagerData.TextureAtlases[textureAtlasName] = CreateRef<TextureAtlas>(textureFilePath.c_str(), colorFormat, rowCount, columnCount);
 
 						// create all animations
 						for (auto& animation : valueObject["animations"])
@@ -79,7 +79,7 @@ namespace Asylum {
 							float frameTime = animation["frame-time"].get<float>();
 
 							// create new animation and store it in unordered_map
-							sResouceManagerData.Animations[animationName] = std::make_shared<Animation>(GetTextureAtlas(textureAtlasName), animationRow, frameCount, frameTime);
+							sResouceManagerData.Animations[animationName] = CreateRef<Animation>(GetTextureAtlas(textureAtlasName), animationRow, frameCount, frameTime);
 						}
 					}
 				}
@@ -96,14 +96,14 @@ namespace Asylum {
 		sResouceManagerData.Animations.clear();
 	}
 
-	std::shared_ptr<Shader> ResourceManager::GetShader(const std::string& name)
+	Ref<Shader> ResourceManager::GetShader(const std::string& name)
 	{
 		return sResouceManagerData.Shaders[name];
 	}
 
-	std::vector<std::shared_ptr<Shader>> ResourceManager::GetAllShaders()
+	std::vector<Ref<Shader>> ResourceManager::GetAllShaders()
 	{
-		std::vector<std::shared_ptr<Shader>> allShaders;
+		std::vector<Ref<Shader>> allShaders;
 		allShaders.reserve(sResouceManagerData.Shaders.size());
 		for (auto& shaderData : sResouceManagerData.Shaders)
 			allShaders.push_back(shaderData.second);
@@ -111,17 +111,17 @@ namespace Asylum {
 		return allShaders;
 	}
 
-	std::shared_ptr<Texture> ResourceManager::GetTexture(const std::string& name)
+	Ref<Texture> ResourceManager::GetTexture(const std::string& name)
 	{
 		return sResouceManagerData.Textures[name];
 	}
 
-	std::shared_ptr<TextureAtlas> ResourceManager::GetTextureAtlas(const std::string& name)
+	Ref<TextureAtlas> ResourceManager::GetTextureAtlas(const std::string& name)
 	{
 		return sResouceManagerData.TextureAtlases[name];
 	}
 
-	std::shared_ptr<Animation> ResourceManager::GetAnimation(const std::string& name)
+	Ref<Animation> ResourceManager::GetAnimation(const std::string& name)
 	{
 		return sResouceManagerData.Animations[name];
 	}

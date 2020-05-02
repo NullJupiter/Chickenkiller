@@ -14,20 +14,8 @@ void App::OnStartup()
 
 	mLayerStack->PushLayer(mGameLayer);
 
-	// toggle fullscreen
-	Asylum::Input::AddKeyPressedCallback([this](int keycode)
-		{
-			static bool isFullscreen = false;
-			if (keycode == AM_KEY_F6)
-			{
-				if (!isFullscreen)
-					mWindow->SetFullscreenMode();
-				else
-					mWindow->SetWindowedMode(50, 50, 1280, 720);
-
-				isFullscreen = !isFullscreen;
-			}
-		});
+	// set event callbacks
+	Asylum::Input::AddKeyPressedCallback(AM_BIND_FN_1(App::OnKeyPressed));
 }
 
 void App::OnShutdown()
@@ -36,7 +24,23 @@ void App::OnShutdown()
 
 void App::OnUpdate(float dt)
 {
-	// quit app when escape button is pressed
-	if (Asylum::Input::IsKeyPressed(AM_KEY_ESCAPE))
+}
+
+void App::OnKeyPressed(int keycode)
+{
+	// toggle fullscreen
+	static bool isFullscreen = false;
+	if (keycode == AM_KEY_F6)
+	{
+		if (!isFullscreen)
+			mWindow->SetFullscreenMode();
+		else
+			mWindow->SetWindowedMode(50, 50, 1280, 720);
+
+		isFullscreen = !isFullscreen;
+	}
+
+	// quit app when escape key has been pressed
+	if (keycode == AM_KEY_ESCAPE)
 		Asylum::Window::Get()->Close();
 }

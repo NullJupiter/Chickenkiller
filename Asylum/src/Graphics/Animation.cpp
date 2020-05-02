@@ -3,7 +3,7 @@
 
 namespace Asylum {
 	
-	Animation::Animation(std::shared_ptr<TextureAtlas> correspondingTextureAtlas, uint32_t animationRow, uint32_t frameCount, float frameTime)
+	Animation::Animation(Ref<TextureAtlas> correspondingTextureAtlas, uint32_t animationRow, uint32_t frameCount, float frameTime)
 		: mCorrespondingTextureAtlas(correspondingTextureAtlas), mAnimationRow(animationRow), mFrameCount(frameCount), mFrameTime(frameTime)
 	{
 		mCurrentFrame = 0;

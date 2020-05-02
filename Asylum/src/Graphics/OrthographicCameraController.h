@@ -28,6 +28,9 @@ namespace Asylum {
 
 		inline float GetZoomLevel() const { return mZoomLevel; };
 		void SetZoomLevel(float zoomLevel) { mZoomLevel = zoomLevel; };
+	private:
+		void OnMouseScrolled(float xoffset, float yoffset);
+		void OnWindowResized(int width, int height);
 	};
 
 }

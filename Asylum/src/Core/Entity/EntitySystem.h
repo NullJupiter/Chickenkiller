@@ -13,10 +13,10 @@ namespace Asylum {
 	{
 		uint32_t EntityID;
 		std::string EntityName;
-		std::shared_ptr<Entity> EntityObject;
-		std::shared_ptr<Shader> CurrentEntityShader;
+		Ref<Entity> EntityObject;
+		Ref<Shader> CurrentEntityShader;
 
-		EntityData(const std::string& name, std::shared_ptr<Entity> entity, const std::string& shaderName)
+		EntityData(const std::string& name, Ref<Entity> entity, const std::string& shaderName)
 			: EntityName(name), EntityObject(entity), EntityID(LastEntityID++)
 		{
 			CurrentEntityShader = ResourceManager::GetShader(shaderName);
@@ -30,9 +30,9 @@ namespace Asylum {
 	
 		static void RegisterEntity(EntityData entityData);
 		static void OnUpdate(float dt);
-		static void OnRender(std::unique_ptr<OrthographicCameraController>& cameraController);
+		static void OnRender(Scope<OrthographicCameraController>& cameraController);
 
-		static void SetEntityShader(const std::string& entityName, std::shared_ptr<Shader> shader);
+		static void SetEntityShader(const std::string& entityName, Ref<Shader> shader);
 	};
 
 }

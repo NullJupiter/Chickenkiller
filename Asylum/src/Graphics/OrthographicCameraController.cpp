@@ -17,17 +17,8 @@ namespace Asylum {
 		mCameraRotationSpeed = 180.0f;
 		
 		// set event callbacks
-		Input::AddScrollCallback([this](float xoffset, float yoffset) 
-			{
-				mZoomLevel -= yoffset * 0.25f;
-				mZoomLevel = std::max(mZoomLevel, 0.25f);
-				mCamera.SetProjection(-mAspectRatio * mZoomLevel, mAspectRatio * mZoomLevel, -mZoomLevel, mZoomLevel);
-			});
-		Window::Get()->AddWindowResizeCallback([this](int width, int height)
-			{
-				mAspectRatio = (float)width / (float)height;
-				mCamera.SetProjection(-mAspectRatio * mZoomLevel, mAspectRatio * mZoomLevel, -mZoomLevel, mZoomLevel);
-			});
+		Input::AddScrollCallback(AM_BIND_FN_2(OrthographicCameraController::OnMouseScrolled));
+		Window::Get()->AddWindowResizeCallback(AM_BIND_FN_2(OrthographicCameraController::OnWindowResized));
 	}
 
 	void OrthographicCameraController::OnUpdate(float dt)
@@ -75,6 +66,19 @@ namespace Asylum {
 		mCamera.SetPosition(mCameraPosition);
 
 		mCameraTranslationSpeed = mZoomLevel;
+	}
+
+	void OrthographicCameraController::OnMouseScrolled(float xoffset, float yoffset)
+	{
+		mZoomLevel -= yoffset * 0.25f;
+		mZoomLevel = std::max(mZoomLevel, 0.25f);
+		mCamera.SetProjection(-mAspectRatio * mZoomLevel, mAspectRatio * mZoomLevel, -mZoomLevel, mZoomLevel);
+	}
+
+	void OrthographicCameraController::OnWindowResized(int width, int height)
+	{
+		mAspectRatio = (float)width / (float)height;
+		mCamera.SetProjection(-mAspectRatio * mZoomLevel, mAspectRatio * mZoomLevel, -mZoomLevel, mZoomLevel);
 	}
 
 }

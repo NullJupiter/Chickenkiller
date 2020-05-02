@@ -258,7 +258,7 @@ namespace Asylum {
 		sRendererData.IndicesCount += 6;
 	}
 
-	void Renderer::DrawTexturedRectImpl(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float zDepth, const glm::vec3& tint)
+	void Renderer::DrawTexturedRectImpl(const glm::vec2& position, const glm::vec2& size, Ref<Texture> texture, float zDepth, const glm::vec3& tint)
 	{
 		// check if the maximum amount of indices is being used or all texture slots are being used
 		// if this happens we end the batch, trigger a draw call and begin a new batch
@@ -323,7 +323,7 @@ namespace Asylum {
 		sRendererData.IndicesCount += 6;
 	}
 
-	void Renderer::DrawRotatedTexturedRectImpl(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float zDepth, const glm::vec3& tint, float angle)
+	void Renderer::DrawRotatedTexturedRectImpl(const glm::vec2& position, const glm::vec2& size, Ref<Texture> texture, float zDepth, const glm::vec3& tint, float angle)
 	{
 		// check if the maximum amount of indices is being used or all texture slots are being used
 		// if this happens we end the batch, trigger a draw call and begin a new batch
@@ -394,7 +394,7 @@ namespace Asylum {
 	}
 
 
-	void Renderer::DrawAnimatedRectImpl(const glm::vec2& position, const glm::vec2& size, float zDepth, const glm::vec3& tint, std::shared_ptr<Animation> animation)
+	void Renderer::DrawAnimatedRectImpl(const glm::vec2& position, const glm::vec2& size, float zDepth, const glm::vec3& tint, Ref<Animation> animation)
 	{
 		// check if the maximum amount of indices is being used or all texture slots are being used
 		// if this happens we end the batch, trigger a draw call and begin a new batch
@@ -461,7 +461,7 @@ namespace Asylum {
 		sRendererData.IndicesCount += 6;
 	}
 
-	void Renderer::DrawRotatedAnimatedRectImpl(const glm::vec2& position, const glm::vec2& size, float zDepth, const glm::vec3& tint, float angle, std::shared_ptr<Animation> animation)
+	void Renderer::DrawRotatedAnimatedRectImpl(const glm::vec2& position, const glm::vec2& size, float zDepth, const glm::vec3& tint, float angle, Ref<Animation> animation)
 	{
 		// check if the maximum amount of indices is being used or all texture slots are being used
 		// if this happens we end the batch, trigger a draw call and begin a new batch
@@ -558,84 +558,84 @@ namespace Asylum {
 	}
 
 	// texture rect calls
-	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture)
+	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, Ref<Texture> texture)
 	{
 		DrawTexturedRectImpl(position, size, texture, 0.0f, { 255, 255, 255 });
 	}
 
-	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float zDepth)
+	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, Ref<Texture> texture, float zDepth)
 	{
 		DrawTexturedRectImpl(position, size, texture, zDepth, { 255, 255, 255 });
 	}
 
-	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, const glm::vec3& tint)
+	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, Ref<Texture> texture, const glm::vec3& tint)
 	{
 		DrawTexturedRectImpl(position, size, texture, 0.0f, tint);
 	}
 
-	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float zDepth, const glm::vec3& tint)
+	void Renderer::DrawTexturedRect(const glm::vec2& position, const glm::vec2& size, Ref<Texture> texture, float zDepth, const glm::vec3& tint)
 	{
 		DrawTexturedRectImpl(position, size, texture, zDepth, tint);
 	}
 
 	// rotated textured rect calls
-	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float angle)
+	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, Ref<Texture> texture, float angle)
 	{
 		DrawRotatedTexturedRectImpl(position, size, texture, 0.0f, { 255,255,255 }, angle);
 	}
 
-	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float angle, float zDepth)
+	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, Ref<Texture> texture, float angle, float zDepth)
 	{
 		DrawRotatedTexturedRectImpl(position, size, texture, zDepth, { 255,255,255 }, angle);
 	}
 
-	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float angle, const glm::vec3& tint)
+	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, Ref<Texture> texture, float angle, const glm::vec3& tint)
 	{
 		DrawRotatedTexturedRectImpl(position, size, texture, 0.0f, tint, angle);
 	}
 
-	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Texture> texture, float angle, float zDepth, const glm::vec3& tint)
+	void Renderer::DrawRotatedTexturedRect(const glm::vec2& position, const glm::vec2& size, Ref<Texture> texture, float angle, float zDepth, const glm::vec3& tint)
 	{
 		DrawRotatedTexturedRectImpl(position, size, texture, zDepth, tint, angle);
 	}
 
 	// animated rect calls
-	void Renderer::DrawAnimatedRect(const glm::vec2& position, const glm::vec2& size, std::shared_ptr<Animation> animation)
+	void Renderer::DrawAnimatedRect(const glm::vec2& position, const glm::vec2& size, Ref<Animation> animation)
 	{
 		DrawAnimatedRectImpl(position, size, 0.0f, { 255,255,255 }, animation);
 	}
 
-	void Renderer::DrawAnimatedRect(const glm::vec2& position, const glm::vec2& size, float zDepth, std::shared_ptr<Animation> animation)
+	void Renderer::DrawAnimatedRect(const glm::vec2& position, const glm::vec2& size, float zDepth, Ref<Animation> animation)
 	{
 		DrawAnimatedRectImpl(position, size, zDepth, { 255,255,255 }, animation);
 	}
 
-	void Renderer::DrawAnimatedRect(const glm::vec2& position, const glm::vec2& size, const glm::vec3& tint, std::shared_ptr<Animation> animation)
+	void Renderer::DrawAnimatedRect(const glm::vec2& position, const glm::vec2& size, const glm::vec3& tint, Ref<Animation> animation)
 	{
 		DrawAnimatedRectImpl(position, size, 0.0f, tint, animation);
 	}
 
-	void Renderer::DrawAnimatedRect(const glm::vec2& position, const glm::vec2& size, const glm::vec3& tint, float zDepth, std::shared_ptr<Animation> animation)
+	void Renderer::DrawAnimatedRect(const glm::vec2& position, const glm::vec2& size, const glm::vec3& tint, float zDepth, Ref<Animation> animation)
 	{
 		DrawAnimatedRectImpl(position, size, zDepth, tint, animation);
 	}
 
-	void Renderer::DrawRotatedAnimatedRect(const glm::vec2& position, const glm::vec2& size, float angle, std::shared_ptr<Animation> animation)
+	void Renderer::DrawRotatedAnimatedRect(const glm::vec2& position, const glm::vec2& size, float angle, Ref<Animation> animation)
 	{
 		DrawRotatedAnimatedRectImpl(position, size, 0.0f, { 255,255,255 }, angle, animation);
 	}
 
-	void Renderer::DrawRotatedAnimatedRect(const glm::vec2& position, const glm::vec2& size, float angle, const glm::vec3& tint, std::shared_ptr<Animation> animation)
+	void Renderer::DrawRotatedAnimatedRect(const glm::vec2& position, const glm::vec2& size, float angle, const glm::vec3& tint, Ref<Animation> animation)
 	{
 		DrawRotatedAnimatedRectImpl(position, size, 0.0f, tint, angle, animation);
 	}
 
-	void Renderer::DrawRotatedAnimatedRect(const glm::vec2& position, const glm::vec2& size, float angle, float zDepth, std::shared_ptr<Animation> animation)
+	void Renderer::DrawRotatedAnimatedRect(const glm::vec2& position, const glm::vec2& size, float angle, float zDepth, Ref<Animation> animation)
 	{
 		DrawRotatedAnimatedRectImpl(position, size, zDepth, { 255,255,255 }, angle, animation);
 	}
 
-	void Renderer::DrawRotatedAnimatedRect(const glm::vec2& position, const glm::vec2& size, float angle, const glm::vec3& tint, float zDepth, std::shared_ptr<Animation> animation)
+	void Renderer::DrawRotatedAnimatedRect(const glm::vec2& position, const glm::vec2& size, float angle, const glm::vec3& tint, float zDepth, Ref<Animation> animation)
 	{
 		DrawRotatedAnimatedRectImpl(position, size, zDepth, tint, angle, animation);
 	}

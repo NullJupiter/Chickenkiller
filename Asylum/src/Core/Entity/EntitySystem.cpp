@@ -8,7 +8,7 @@ namespace Asylum {
 	struct EntitySystemData
 	{
 		std::vector<EntityData> EntitiesData;
-		std::vector<std::pair<std::shared_ptr<Shader>, std::vector<uint32_t>>> ShaderEntityDataMap;
+		std::vector<std::pair<Ref<Shader>, std::vector<uint32_t>>> ShaderEntityDataMap;
 	};
 	static EntitySystemData sData;
 
@@ -16,11 +16,11 @@ namespace Asylum {
 	void EntitySystem::Init()
 	{
 		// get all loaded shaders
-		std::vector<std::shared_ptr<Shader>> allShaders = ResourceManager::GetAllShaders();
+		std::vector<Ref<Shader>> allShaders = ResourceManager::GetAllShaders();
 
 		// initialize shader entity data map with all loaded shaders
 		sData.ShaderEntityDataMap.reserve(allShaders.size());
-		for (std::shared_ptr<Shader> shader : allShaders)
+		for (Ref<Shader> shader : allShaders)
 			sData.ShaderEntityDataMap.push_back(std::make_pair(shader, std::vector<uint32_t>()));
 	}
 
@@ -37,7 +37,7 @@ namespace Asylum {
 		}
 	}
 
-	void EntitySystem::SetEntityShader(const std::string& entityName, std::shared_ptr<Shader> shader)
+	void EntitySystem::SetEntityShader(const std::string& entityName, Ref<Shader> shader)
 	{
 		EntityData* data = nullptr;
 
@@ -92,11 +92,11 @@ namespace Asylum {
 		}
 	}
 
-	void EntitySystem::OnRender(std::unique_ptr<OrthographicCameraController>& cameraController)
+	void EntitySystem::OnRender(Scope<OrthographicCameraController>& cameraController)
 	{
 		for (auto& shaderEntityDataEntry : sData.ShaderEntityDataMap)
 		{
-			std::shared_ptr<Shader> currentShader = shaderEntityDataEntry.first;
+			Ref<Shader> currentShader = shaderEntityDataEntry.first;
 			const std::vector<uint32_t>& entityIDs = shaderEntityDataEntry.second;
 
 			// bind shader

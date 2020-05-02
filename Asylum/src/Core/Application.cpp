@@ -24,7 +24,7 @@ namespace Asylum {
 		EntitySystem::Init();
 
 		// load shader
-		std::shared_ptr<Shader> defaultShader = ResourceManager::GetShader("default");
+		Ref<Shader> defaultShader = ResourceManager::GetShader("default");
 		defaultShader->Bind();
 		// set texture slots array
 		int samplers[8];

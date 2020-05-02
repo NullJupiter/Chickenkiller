@@ -1,6 +1,7 @@
 #pragma once
 
 // Core
+#include "Core/Core.h"
 #include <GLFW/glfw3.h>
 #include "Core/Log.h"
 #include "Core/LayerStack.h"

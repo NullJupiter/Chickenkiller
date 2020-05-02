@@ -6,7 +6,7 @@ class GameLayer : public Asylum::Layer
 {
 private:
 	// camera
-	std::unique_ptr<Asylum::OrthographicCameraController> mCameraController;
+	Asylum::Scope<Asylum::OrthographicCameraController> mCameraController;
 public:
 	GameLayer();
 
@@ -14,4 +14,6 @@ public:
 
 	void OnDetach() override;
 	void OnAttach() override;
+private:
+	void OnKeyPressed(int keycode);
 };
