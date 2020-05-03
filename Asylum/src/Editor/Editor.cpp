@@ -14,7 +14,7 @@ namespace Asylum {
 	struct EditorData
 	{
 		bool EditorIsActive = true;
-		bool IsGameRunning = true;
+		bool IsGameWindowActive = false;
 		glm::vec2 GameWindowSize = { 0.0f, 0.0f };
 	};
 	static EditorData sData;
@@ -23,16 +23,17 @@ namespace Asylum {
 	{
 		if (sData.EditorIsActive)
 		{
-			// begin docking space
+			// begin docking space and new frame
 			ImGuiManager::Begin();
 			ImGui::DockSpaceOverViewport();
 
 			// render all imgui windows
+			RenderMainMenu();
 			RenderEntityListWindow();
 
 			// begin game window
 			ImGui::Begin("Game");
-
+			sData.IsGameWindowActive = ImGui::IsWindowFocused();
 			ImVec2 windowSize = ImGui::GetWindowSize();
 			if (windowSize.x != sData.GameWindowSize.x || windowSize.y != sData.GameWindowSize.y)
 				cameraController->UpdateProjection(windowSize.x / windowSize.y);
@@ -56,6 +57,7 @@ namespace Asylum {
 			ImGui::GetWindowDrawList()->AddImage((void*)framebufferTexture, ImVec2(pos.x, pos.y), ImVec2(pos.x + sData.GameWindowSize.x, pos.y + sData.GameWindowSize.y), ImVec2(0, 1), ImVec2(1, 0));
 
 			ImGui::End();
+
 			ImGuiManager::End();
 		}
 	}
@@ -65,23 +67,82 @@ namespace Asylum {
 		sData.EditorIsActive = isActive;
 	}
 
+	bool Editor::GetIsGameWindowActive()
+	{
+		return sData.IsGameWindowActive;
+	}
+
+	void Editor::RenderMainMenu()
+	{
+		static bool showAboutWindow = false;
+		if (ImGui::BeginMainMenuBar())
+		{
+			if (ImGui::BeginMenu("Asylum"))
+			{
+				if (ImGui::MenuItem("About"))
+					showAboutWindow = !showAboutWindow;
+
+				if (ImGui::MenuItem("Quit"))
+					Window::Get()->Close();
+
+				ImGui::EndMenu();
+			}
+			
+			static bool windowIsFullscreen = false;
+			if (ImGui::BeginMenu("View"))
+			{
+				if (!windowIsFullscreen)
+				{
+					if (ImGui::MenuItem("Switch to Fullscreen Mode"))
+					{
+						windowIsFullscreen = true;
+						Window::Get()->SetFullscreenMode();
+					}
+				}
+				else
+				{
+					if (ImGui::MenuItem("Switch to Windowed Mode"))
+					{
+						windowIsFullscreen = false;
+						Window::Get()->SetWindowedMode(100, 100, Window::Get()->GetWidth()/2, Window::Get()->GetHeight()/2);
+					}
+				}
+
+				ImGui::EndMenu();
+			}
+
+			ImGui::EndMainMenuBar();
+		}
+
+		if (showAboutWindow)
+		{
+			ImGui::Begin("About", &showAboutWindow);
+			ImGui::Text("Asylum Engine - v1.0");
+			ImGui::Text("Created by Mark Haube");
+			ImGui::Text("Copyright 2020 - All rights reserved.");
+			ImGui::End();
+		}
+	}
+
 	void Editor::RenderEntityListWindow()
 	{
 		ImGui::Begin("Entity List View");
 
 		// get all entity data
 		const std::vector<EntityData>& entitiesData = EntitySystem::GetAllEntityData();
-		ImGui::ListBoxHeader("Entities");
-		for (auto entityData : entitiesData)
+		static const char* currentEntity = NULL;
+		if (ImGui::BeginCombo("Entities", currentEntity))
 		{
-			static bool selected = false;
-			if (ImGui::Selectable(entityData.EntityName.c_str(), &selected))
+			for (uint32_t i = 0; i < entitiesData.size(); i++)
 			{
-
+				bool isSelected = (currentEntity == entitiesData[i].EntityName.c_str());
+				if (ImGui::Selectable(entitiesData[i].EntityName.c_str(), isSelected))
+					currentEntity = entitiesData[i].EntityName.c_str();
+				if (isSelected)
+					ImGui::SetItemDefaultFocus();
 			}
+			ImGui::EndCombo();
 		}
-		ImGui::ListBoxFooter();
-
 		ImGui::End();
 	}
 

@@ -39,8 +39,4 @@ void App::OnKeyPressed(int keycode)
 
 		isFullscreen = !isFullscreen;
 	}
-
-	// quit app when escape key has been pressed
-	if (keycode == AM_KEY_ESCAPE)
-		Asylum::Window::Get()->Close();
 }

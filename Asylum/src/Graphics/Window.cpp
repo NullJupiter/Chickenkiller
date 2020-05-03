@@ -2,6 +2,7 @@
 #include "Window.h"
 
 #include "Core/Log.h" 
+#include "Editor/Editor.h"
 
 namespace Asylum {
 
@@ -65,7 +66,7 @@ namespace Asylum {
 		// enable blending
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 		glEnable(GL_BLEND);
-		glEnable(GL_DEPTH_TEST);
+		//glEnable(GL_DEPTH_TEST);
 
 		// enable face culling
 		glEnable(GL_CULL_FACE);
@@ -95,19 +96,25 @@ namespace Asylum {
 
 		glfwSetKeyCallback(mWindow, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 			{
-				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-				if (action == GLFW_PRESS || action == GLFW_REPEAT)
+				if (Editor::GetIsGameWindowActive())
 				{
-					for (auto& fn : data.KeyPressedCallbacks)
-						fn(key);
+					WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+					if (action == GLFW_PRESS || action == GLFW_REPEAT)
+					{
+						for (auto& fn : data.KeyPressedCallbacks)
+							fn(key);
+					}
 				}
 			});
 
 		glfwSetScrollCallback(mWindow, [](GLFWwindow* window, double xoffset, double yoffset)
 			{
-				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-				for (auto& fn : data.ScrollCallbacks)
-					fn((float)xoffset, (float)yoffset);
+				if (Editor::GetIsGameWindowActive())
+				{
+					WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+					for (auto& fn : data.ScrollCallbacks)
+						fn((float)xoffset, (float)yoffset);
+				}
 			});
 	}
 
@@ -132,7 +139,7 @@ namespace Asylum {
 
 	void Window::Clear() const
 	{
-		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT | GL_STENCIL_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
 	void Window::SetVSync(bool enabled)

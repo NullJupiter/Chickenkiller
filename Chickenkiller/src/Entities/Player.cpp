@@ -1,7 +1,7 @@
 #include "Player.h"
 
 Player::Player(const glm::vec2& position, const glm::vec2& size)
-	: Entity(position, size, 0.0f)
+	: Entity(position, size)
 {
 	mWalkAnimation = Asylum::ResourceManager::GetAnimation("player-right");
 }

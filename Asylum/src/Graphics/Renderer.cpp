@@ -39,7 +39,6 @@ namespace Asylum {
 
 		// framebuffer
 		uint32_t FBO = 0;
-		uint32_t RBO = 0;
 		uint32_t FramebufferColorTexture = 0;
 	};
 
@@ -130,13 +129,6 @@ namespace Asylum {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
 		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, sRendererData.FramebufferColorTexture, 0);
-
-		// create renderbuffer for depth and stencil buffer
-		glGenRenderbuffers(1, &sRendererData.RBO);
-		glBindRenderbuffer(GL_RENDERBUFFER, sRendererData.RBO);
-		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Window::Get()->GetWidth(), Window::Get()->GetHeight());
-		glBindRenderbuffer(GL_RENDERBUFFER, 0);
-		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, sRendererData.RBO);
 
 		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
 			LOG("Framebuffer isn't complete!");

@@ -14,7 +14,9 @@ namespace Asylum {
 		static void EndCustomRender();
 
 		static void SetEditorIsActive(bool isActive);
+		static bool GetIsGameWindowActive();
 	private:
+		static void RenderMainMenu();
 		static void RenderEntityListWindow();
 	};
 #else
@@ -25,6 +27,7 @@ namespace Asylum {
 		static void EndCustomRender() {};
 
 		static void SetEditorIsActive(bool isActive) {};
+		static bool GetIsGameWindowActive() { return true; };
 	};
 #endif
 
