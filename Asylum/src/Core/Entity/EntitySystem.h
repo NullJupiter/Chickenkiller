@@ -16,6 +16,7 @@ namespace Asylum {
 		Ref<Entity> EntityObject;
 		Ref<Shader> CurrentEntityShader;
 
+		EntityData() {}
 		EntityData(const std::string& name, Ref<Entity> entity, const std::string& shaderName)
 			: EntityName(name), EntityObject(entity), EntityID(LastEntityID++)
 		{
@@ -27,11 +28,14 @@ namespace Asylum {
 	{
 	public:
 		static void Init();
+		static void RemoveAllEntities();
 	
 		static void RegisterEntity(EntityData entityData);
 		static void OnUpdate(float dt);
 		static void OnRender(Scope<OrthographicCameraController>& cameraController);
 
+		static const std::vector<EntityData>& GetAllEntityData();
+		static const EntityData& GetEntityData(std::string name);
 		static void SetEntityShader(const std::string& entityName, Ref<Shader> shader);
 	};
 

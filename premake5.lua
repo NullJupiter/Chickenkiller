@@ -64,14 +64,6 @@ project "Asylum"
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
 		"%{IncludeDir.json}",
-		"%{IncludeDir.ImGui}"
-	}
-
-	links { 
-		"GLFW",
-		"Glad",
-		"ImGui",
-		"opengl32.lib"
 	}
 
 	filter "system:windows"
@@ -87,15 +79,65 @@ project "Asylum"
 		runtime "Debug"
 		symbols "on"
 
+		includedirs {
+			"%{prj.name}/",
+			"%{prj.name}/src",
+			"%{IncludeDir.GLFW}",
+			"%{IncludeDir.Glad}",
+			"%{IncludeDir.glm}",
+			"%{IncludeDir.stb_image}",
+			"%{IncludeDir.json}",
+			"%{IncludeDir.ImGui}"
+		}
+
+		links { 
+			"GLFW",
+			"Glad",
+			"opengl32.lib",
+			"ImGui"
+		}
+
 	filter "configurations:Release"
 		defines "AM_RELEASE"
 		runtime "Release"
 		optimize "on"
 
+		includedirs {
+			"%{prj.name}/",
+			"%{prj.name}/src",
+			"%{IncludeDir.GLFW}",
+			"%{IncludeDir.Glad}",
+			"%{IncludeDir.glm}",
+			"%{IncludeDir.stb_image}",
+			"%{IncludeDir.json}",
+		}
+
+		links { 
+			"GLFW",
+			"Glad",
+			"opengl32.lib"
+		}
+
 	filter "configurations:Dist"
 		defines "AM_DIST"
 		runtime "Release"
 		optimize "on"
+
+		includedirs {
+			"%{prj.name}/",
+			"%{prj.name}/src",
+			"%{IncludeDir.GLFW}",
+			"%{IncludeDir.Glad}",
+			"%{IncludeDir.glm}",
+			"%{IncludeDir.stb_image}",
+			"%{IncludeDir.json}",
+		}
+
+		links { 
+			"GLFW",
+			"Glad",
+			"opengl32.lib"
+		}
 
 project "Chickenkiller"
 	location "Chickenkiller"
@@ -116,10 +158,8 @@ project "Chickenkiller"
 		"Asylum/src",
 		"%{prj.name}/src",
 		"%{IncludeDir.GLFW}",
-		--"%{IncludeDir.Glad}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.json}"
-		--"%{IncludeDir.stb_image}"
 	}
 
 	links {

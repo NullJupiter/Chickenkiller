@@ -30,32 +30,40 @@ void GameLayer::OnUpdate(float dt)
 	// updating
 	{
 		// update the camera controller
-		//mCameraController->OnUpdate(dt);
+		mCameraController->OnUpdate(dt);
 
 		// update all entities
-		//Asylum::EntitySystem::OnUpdate(dt);
+		Asylum::EntitySystem::OnUpdate(dt);
 	}
 
 	// rendering
 	{
+		Asylum::Editor::BeginCustomRender(mCameraController);
+		
 		// render all entities
-		//Asylum::EntitySystem::OnRender(mCameraController);
+		Asylum::EntitySystem::OnRender(mCameraController);
+
+		Asylum::Editor::EndCustomRender();
 	}
 }
 
 void GameLayer::OnDetach()
 {
 	LOG("[*] Game Layer Detached!");
+
+	// remove all entities
+	Asylum::EntitySystem::RemoveAllEntities();
 }
 
 void GameLayer::OnKeyPressed(int keycode)
 {
 	if (keycode == AM_KEY_F1)
 	{
-		Asylum::EntitySystem::SetEntityShader("Player", Asylum::ResourceManager::GetShader("red"));
+		Asylum::Editor::SetEditorIsActive(false);
+		mCameraController->UpdateProjection(16.0f / 9.0f);
 	}
 	else if (keycode == AM_KEY_F2)
 	{
-		Asylum::EntitySystem::SetEntityShader("Player", Asylum::ResourceManager::GetShader("default"));
+		Asylum::Editor::SetEditorIsActive(true);
 	}
 }

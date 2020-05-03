@@ -5,7 +5,6 @@
 class App : public Asylum::Application
 {
 private:
-	Asylum::EditorLayer* mEditorLayer;
 	Asylum::Layer* mGameLayer;
 public:
 	App() { OnStartup(); };

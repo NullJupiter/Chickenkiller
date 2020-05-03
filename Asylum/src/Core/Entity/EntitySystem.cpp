@@ -24,6 +24,15 @@ namespace Asylum {
 			sData.ShaderEntityDataMap.push_back(std::make_pair(shader, std::vector<uint32_t>()));
 	}
 
+	void EntitySystem::RemoveAllEntities()
+	{
+		for (uint32_t i = 0; i < sData.EntitiesData.size(); i++)
+			sData.EntitiesData.erase(sData.EntitiesData.begin() + i);
+
+		for (uint32_t i = 0; i < sData.ShaderEntityDataMap.size(); i++)
+			sData.ShaderEntityDataMap.erase(sData.ShaderEntityDataMap.begin() + i);
+	}
+
 	void EntitySystem::RegisterEntity(EntityData entityData)
 	{
 		// push back the entity data and get the entity data index in vector
@@ -35,6 +44,22 @@ namespace Asylum {
 			if (shaderEntityDataEntry.first == entityData.CurrentEntityShader)
 				shaderEntityDataEntry.second.push_back(entityData.EntityID);
 		}
+	}
+
+	const std::vector<EntityData>& EntitySystem::GetAllEntityData()
+	{
+		return sData.EntitiesData;
+	}
+
+	const EntityData& EntitySystem::GetEntityData(std::string name)
+	{
+		for (auto& entityData : sData.EntitiesData)
+		{
+			if (entityData.EntityName == name)
+				return entityData;
+		}
+
+		return EntityData();
 	}
 
 	void EntitySystem::SetEntityShader(const std::string& entityName, Ref<Shader> shader)

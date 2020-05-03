@@ -1,4 +1,5 @@
 #include "ampch.h"
+#ifdef AM_DEBUG
 #include "ImGuiManager.h"
 
 #include "imgui.h"
@@ -73,3 +74,5 @@ namespace Asylum {
 
 
 }
+
+#endif

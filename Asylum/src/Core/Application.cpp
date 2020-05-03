@@ -18,8 +18,10 @@ namespace Asylum {
 		// init renderer
 		Renderer::Init();
 
+#ifdef AM_DEBUG
 		// init imgui
 		ImGuiManager::Init();
+#endif
 
 		// load resources
 		ResourceManager::LoadResources("res/config");
@@ -47,8 +49,10 @@ namespace Asylum {
 		// unload resources
 		ResourceManager::UnloadResources();
 
+#ifdef AM_DEBUG
 		// shut imgui down
 		ImGuiManager::Shutdown();
+#endif
 
 		// shut down the renderer
 		Renderer::Shutdown();

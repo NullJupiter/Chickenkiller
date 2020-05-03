@@ -19,7 +19,7 @@
 #include "Graphics/Animation.h"
 
 // Editor
-#include "Editor/EditorLayer.h"
+#include "Editor/Editor.h"
 
 // Utils
 #include "Utils/Utils.h"

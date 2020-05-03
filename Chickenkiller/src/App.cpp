@@ -10,10 +10,8 @@ void App::OnStartup()
 	mWindow->SetVSync(false);
 
 	// init all layers
-	mEditorLayer = new Asylum::EditorLayer();
 	mGameLayer = new GameLayer();
 
-	mLayerStack->PushLayer(mEditorLayer);
 	mLayerStack->PushLayer(mGameLayer);
 
 	// set event callbacks

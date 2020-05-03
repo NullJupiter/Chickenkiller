@@ -1,5 +1,7 @@
 #pragma once
 
+#ifdef AM_DEBUG
+
 namespace Asylum {
 
 	class ImGuiManager
@@ -13,3 +15,5 @@ namespace Asylum {
 	};
 
 }
+
+#endif
