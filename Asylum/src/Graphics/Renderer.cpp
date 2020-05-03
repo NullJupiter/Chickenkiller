@@ -3,6 +3,8 @@
 
 #include <glm/gtc/matrix_transform.hpp>
 
+#include "Graphics/Window.h"
+
 namespace Asylum {
 
 	// renderer consts used to define how many rects can be drawn in one batch
@@ -34,6 +36,11 @@ namespace Asylum {
 		uint32_t TextureSlotIndex = 1;
 
 		glm::vec4 RectStandardVertices[4];
+
+		// framebuffer
+		uint32_t FBO = 0;
+		uint32_t RBO = 0;
+		uint32_t FramebufferColorTexture = 0;
 	};
 
 	static RendererProperties sRendererData;
@@ -111,6 +118,29 @@ namespace Asylum {
 		sRendererData.RectStandardVertices[1] = {  0.5f, -0.5f, 0.0f, 1.0f };
 		sRendererData.RectStandardVertices[2] = {  0.5f,  0.5f, 0.0f, 1.0f };
 		sRendererData.RectStandardVertices[3] = { -0.5f,  0.5f, 0.0f, 1.0f };
+
+		// create framebuffer object
+		glGenFramebuffers(1, &sRendererData.FBO);
+		glBindFramebuffer(GL_FRAMEBUFFER, sRendererData.FBO);
+		
+		// create framebuffer texture attachment
+		glGenTextures(1, &sRendererData.FramebufferColorTexture);
+		glBindTexture(GL_TEXTURE_2D, sRendererData.FramebufferColorTexture);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Window::Get()->GetWidth(), Window::Get()->GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, sRendererData.FramebufferColorTexture, 0);
+
+		// create renderbuffer for depth and stencil buffer
+		/*glGenRenderbuffers(1, &sRendererData.RBO);
+		glBindRenderbuffer(GL_RENDERBUFFER, sRendererData.RBO);
+		glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, Window::Get()->GetWidth(), Window::Get()->GetHeight());
+		glBindRenderbuffer(GL_RENDERBUFFER, 0);
+		glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, sRendererData.RBO);*/
+
+		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
+			LOG("Framebuffer isn't complete!");
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
 	void Renderer::Shutdown()
@@ -122,9 +152,25 @@ namespace Asylum {
 
 		// delete the 1x1 white texturee
 		glDeleteTextures(1, &sRendererData.WhiteTexture);
+
+		// delete framebuffer object
+		glDeleteFramebuffers(1, &sRendererData.FBO);
 		
 		// delete the CPU vertex buffer
 		delete[] sRendererData.RectBuffer;
+	}
+
+	void Renderer::DrawToFramebuffer(bool useFramebuffer)
+	{
+		if (useFramebuffer)
+			glBindFramebuffer(GL_FRAMEBUFFER, sRendererData.FBO);
+		else
+			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	}
+
+	uint32_t Renderer::GetFramebufferRender()
+	{
+		return sRendererData.FramebufferColorTexture;
 	}
 
 	void Renderer::BeginDraw()

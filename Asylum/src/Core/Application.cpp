@@ -4,6 +4,7 @@
 #include "Graphics/Renderer.h"
 #include "Core/ResourceManager.h"
 #include "Core/Entity/EntitySystem.h"
+#include "Editor/ImGuiManager.h"
 
 namespace Asylum {
 
@@ -16,6 +17,9 @@ namespace Asylum {
 
 		// init renderer
 		Renderer::Init();
+
+		// init imgui
+		ImGuiManager::Init();
 
 		// load resources
 		ResourceManager::LoadResources("res/config");
@@ -42,6 +46,9 @@ namespace Asylum {
 
 		// unload resources
 		ResourceManager::UnloadResources();
+
+		// shut imgui down
+		ImGuiManager::Shutdown();
 
 		// shut down the renderer
 		Renderer::Shutdown();

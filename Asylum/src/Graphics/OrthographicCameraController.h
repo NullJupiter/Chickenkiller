@@ -22,6 +22,7 @@ namespace Asylum {
 		OrthographicCameraController(float aspectRatio, bool rotation = false);
 
 		void OnUpdate(float dt);
+		void UpdateProjection(float aspectRatio);
 
 		inline OrthographicCamera& GetCamera() { return mCamera; };
 		inline const OrthographicCamera& GetCamera() const { return mCamera; };

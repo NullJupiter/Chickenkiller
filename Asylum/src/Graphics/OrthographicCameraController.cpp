@@ -68,6 +68,12 @@ namespace Asylum {
 		mCameraTranslationSpeed = mZoomLevel;
 	}
 
+	void OrthographicCameraController::UpdateProjection(float aspectRatio)
+	{
+		mAspectRatio = aspectRatio;
+		mCamera.SetProjection(-mAspectRatio * mZoomLevel, mAspectRatio * mZoomLevel, -mZoomLevel, mZoomLevel);
+	}
+
 	void OrthographicCameraController::OnMouseScrolled(float xoffset, float yoffset)
 	{
 		mZoomLevel -= yoffset * 0.25f;

@@ -2,7 +2,6 @@
 
 // Core
 #include "Core/Core.h"
-#include <GLFW/glfw3.h>
 #include "Core/Log.h"
 #include "Core/LayerStack.h"
 #include "Core/Input.h"
@@ -18,6 +17,9 @@
 #include "Graphics/Shader.h"
 #include "Graphics/OrthographicCameraController.h"
 #include "Graphics/Animation.h"
+
+// Editor
+#include "Editor/EditorLayer.h"
 
 // Utils
 #include "Utils/Utils.h"

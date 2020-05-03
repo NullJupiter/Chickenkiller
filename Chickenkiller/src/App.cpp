@@ -9,9 +9,11 @@ void App::OnStartup()
 	mWindow->SetWindowTitle("Chickenkiller");
 	mWindow->SetVSync(false);
 
-	// init game layer
+	// init all layers
+	mEditorLayer = new Asylum::EditorLayer();
 	mGameLayer = new GameLayer();
 
+	mLayerStack->PushLayer(mEditorLayer);
 	mLayerStack->PushLayer(mGameLayer);
 
 	// set event callbacks

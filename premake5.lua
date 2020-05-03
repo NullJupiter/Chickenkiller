@@ -20,10 +20,12 @@ IncludeDir["Glad"] = "Asylum/vendor/Glad/include"
 IncludeDir["glm"] = "Asylum/vendor/glm"
 IncludeDir["stb_image"] = "Asylum/vendor/stb_image"
 IncludeDir["json"] = "Asylum/vendor/json/include"
+IncludeDir["ImGui"] = "Asylum/vendor/imgui"
 
 group "Dependencies"
 	include "Asylum/vendor/GLFW"
 	include "Asylum/vendor/Glad"
+	include "Asylum/vendor/imgui"
 
 group ""
 
@@ -61,12 +63,14 @@ project "Asylum"
 		"%{IncludeDir.Glad}",
 		"%{IncludeDir.glm}",
 		"%{IncludeDir.stb_image}",
-		"%{IncludeDir.json}"
+		"%{IncludeDir.json}",
+		"%{IncludeDir.ImGui}"
 	}
 
 	links { 
 		"GLFW",
 		"Glad",
+		"ImGui",
 		"opengl32.lib"
 	}
 

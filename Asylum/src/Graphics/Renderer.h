@@ -20,6 +20,9 @@ namespace Asylum {
 		static void Init();
 		static void Shutdown();
 
+		static void DrawToFramebuffer(bool useFramebuffer);
+		static uint32_t GetFramebufferRender();
+
 		// draw cicle
 		static void BeginDraw();
 		static void EndDraw();

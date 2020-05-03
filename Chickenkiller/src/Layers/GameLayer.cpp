@@ -30,16 +30,16 @@ void GameLayer::OnUpdate(float dt)
 	// updating
 	{
 		// update the camera controller
-		mCameraController->OnUpdate(dt);
+		//mCameraController->OnUpdate(dt);
 
 		// update all entities
-		Asylum::EntitySystem::OnUpdate(dt);
+		//Asylum::EntitySystem::OnUpdate(dt);
 	}
 
 	// rendering
 	{
 		// render all entities
-		Asylum::EntitySystem::OnRender(mCameraController);
+		//Asylum::EntitySystem::OnRender(mCameraController);
 	}
 }
 
