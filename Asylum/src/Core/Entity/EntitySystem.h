@@ -32,11 +32,11 @@ namespace Asylum {
 	
 		static void RegisterEntity(EntityData entityData);
 		static void OnUpdate(float dt);
-		static void OnRender(Scope<OrthographicCameraController>& cameraController);
+		static void OnRender();
 
 		static const std::vector<EntityData>& GetAllEntityData();
 		static const EntityData& GetEntityData(std::string name);
-		static void SetEntityShader(const std::string& entityName, Ref<Shader> shader);
+		static void SetEntityShader(const std::string& entityName, const Ref<Shader>& shader);
 	};
 
 }

@@ -12,6 +12,8 @@ namespace Asylum {
 
 		virtual void OnAttach() {};
 		virtual void OnDetach() {};
+
+		virtual void AddEventCallbacks() {};
 	};
 
 }

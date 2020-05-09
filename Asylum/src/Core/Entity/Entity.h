@@ -23,16 +23,21 @@ namespace Asylum {
 	protected:
 		glm::vec2 mPosition;
 		glm::vec2 mSize;
+		float mRotation;
+		glm::vec4 mTint;
 		
 		CollisionMask mCollisionMask;
 		bool mIsActive;
 	public:
 		Entity(const glm::vec2& position, const glm::vec2& size)
-			: mPosition(position), mSize(size), mIsActive(true)
+			: mPosition(position), mSize(size), mRotation(0.0f), mTint({ 255,255,255,255 }), mIsActive(true)
 		{}
 
 		virtual void OnUpdate(float dt) = 0;
 		virtual void OnRender() = 0;
+
+		// setter
+		inline void SetPosition(const glm::vec2& position) { mPosition = position; };
 
 		// getter
 		inline const glm::vec2& GetPosition() const { return mPosition; };

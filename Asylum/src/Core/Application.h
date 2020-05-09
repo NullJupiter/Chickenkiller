@@ -35,6 +35,7 @@ namespace Asylum {
 		virtual void OnUpdate(float dt) = 0;
 	private:
 		void UpdateAllLayers(float dt);
+		void OnKeyPressed(int keycode);
 	};
 
 }

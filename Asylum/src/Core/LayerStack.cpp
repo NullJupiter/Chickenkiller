@@ -16,6 +16,7 @@ namespace Asylum {
 	{
 		mLayers.emplace(mLayers.begin() + mLayerInsertIndex, layer);
 		layer->OnAttach();
+		layer->AddEventCallbacks();
 		mLayerInsertIndex++;
 	}
 

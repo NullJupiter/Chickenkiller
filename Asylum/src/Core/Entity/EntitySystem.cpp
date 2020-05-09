@@ -1,6 +1,7 @@
 #include "ampch.h"
 #include "EntitySystem.h"
 
+#include "Editor/Editor.h"
 #include "Graphics/Renderer.h"
 
 namespace Asylum {
@@ -62,7 +63,7 @@ namespace Asylum {
 		return EntityData();
 	}
 
-	void EntitySystem::SetEntityShader(const std::string& entityName, Ref<Shader> shader)
+	void EntitySystem::SetEntityShader(const std::string& entityName, const Ref<Shader>& shader)
 	{
 		EntityData* data = nullptr;
 
@@ -108,17 +109,22 @@ namespace Asylum {
 
 	void EntitySystem::OnUpdate(float dt)
 	{
-		// update all registered entities
-		for (auto& entityData : sData.EntitiesData)
+		if (!Editor::IsEditorActive())
 		{
-			// if the entity is active update
-			if (entityData.EntityObject->IsActive())
-				entityData.EntityObject->OnUpdate(dt);
+			// update all registered entities
+			for (auto& entityData : sData.EntitiesData)
+			{
+				// if the entity is active update
+				if (entityData.EntityObject->IsActive())
+					entityData.EntityObject->OnUpdate(dt);
+			}
 		}
 	}
 
-	void EntitySystem::OnRender(Scope<OrthographicCameraController>& cameraController)
+	void EntitySystem::OnRender()
 	{
+		static OrthographicCameraController* cameraController = OrthographicCameraController::Get();
+
 		for (auto& shaderEntityDataEntry : sData.ShaderEntityDataMap)
 		{
 			Ref<Shader> currentShader = shaderEntityDataEntry.first;
@@ -128,7 +134,7 @@ namespace Asylum {
 			currentShader->Bind();
 
 			// set view projection matrix for shader
-			currentShader->SetUniformMat4("uViewProjection", cameraController->GetCamera().GetViewProjectionMatrix());
+			currentShader->SetUniformMat4("uViewProjection", cameraController->GetViewProjectionMatrix());
 
 			Renderer::BeginDraw();
 			for (auto& entityID : entityIDs)

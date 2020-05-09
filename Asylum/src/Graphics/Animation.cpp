@@ -3,7 +3,7 @@
 
 namespace Asylum {
 	
-	Animation::Animation(Ref<TextureAtlas> correspondingTextureAtlas, uint32_t animationRow, uint32_t frameCount, float frameTime)
+	Animation::Animation(const Ref<TextureAtlas>& correspondingTextureAtlas, uint32_t animationRow, uint32_t frameCount, float frameTime)
 		: mCorrespondingTextureAtlas(correspondingTextureAtlas), mAnimationRow(animationRow), mFrameCount(frameCount), mFrameTime(frameTime)
 	{
 		mCurrentFrame = 0;
@@ -16,8 +16,6 @@ namespace Asylum {
 
 		mFrameSize.x = (float)mTextureSize.x / textureColumns;
 		mFrameSize.y = (float)mTextureSize.y / textureRows;
-
-		mCurrentTextureCoords.resize(4);
 
 		UpdateTextureCoords();
 	}

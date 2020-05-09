@@ -50,9 +50,13 @@ namespace Asylum {
 		void SetClearColor(float r, float g, float b) const;
 		void Clear() const;
 
-		inline void AddScrollCallback(std::function<void(float, float)> callback) { mData.ScrollCallbacks.push_back(callback); };
-		inline void AddKeyPressedCallback(std::function<void(int)> callback) { mData.KeyPressedCallbacks.push_back(callback); };
-		inline void AddWindowResizeCallback(std::function<void(int, int)> callback) { mData.WindowResizeCallbacks.push_back(callback); };
+		inline void AddScrollCallback(const std::function<void(float, float)>& callback) { mData.ScrollCallbacks.push_back(callback); };
+		inline void AddKeyPressedCallback(const std::function<void(int)>& callback) { mData.KeyPressedCallbacks.push_back(callback); };
+		inline void AddWindowResizeCallback(const std::function<void(int, int)>& callback) { mData.WindowResizeCallbacks.push_back(callback); };
+
+		inline void RemoveAllScrollCallback() { mData.ScrollCallbacks.clear(); };
+		inline void RemoveAllKeyPressedCallback() { mData.KeyPressedCallbacks.clear(); };
+		inline void RemoveAllWindowResizeCallback() { mData.WindowResizeCallbacks.clear(); };
 
 		inline uint32_t GetWidth() const { return mData.Width; };
 		inline uint32_t GetHeight() const { return mData.Height; };

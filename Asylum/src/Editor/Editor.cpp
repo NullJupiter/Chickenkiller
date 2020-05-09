@@ -19,10 +19,12 @@ namespace Asylum {
 	};
 	static EditorData sData;
 
-	void Editor::BeginCustomRender(Scope<OrthographicCameraController>& cameraController)
+	void Editor::BeginCustomRender()
 	{
 		if (sData.EditorIsActive)
 		{
+			static OrthographicCameraController* cameraController = OrthographicCameraController::Get();
+
 			// begin docking space and new frame
 			ImGuiManager::Begin();
 			ImGui::DockSpaceOverViewport();
@@ -67,9 +69,19 @@ namespace Asylum {
 		sData.EditorIsActive = isActive;
 	}
 
-	bool Editor::GetIsGameWindowActive()
+	bool Editor::IsEditorActive()
+	{
+		return sData.EditorIsActive;
+	}
+
+	bool Editor::IsGameWindowActive()
 	{
 		return sData.IsGameWindowActive;
+	}
+
+	const glm::vec2& Editor::GetGameWindowSize()
+	{
+		return sData.GameWindowSize;
 	}
 
 	void Editor::RenderMainMenu()

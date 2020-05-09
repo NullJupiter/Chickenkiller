@@ -18,7 +18,7 @@ namespace Asylum {
 
 	void OrthographicCamera::RecalculateViewMatrix()
 	{
-		glm::mat4 transform = glm::translate(glm::mat4(1.0f), mPosition);
+		glm::mat4 transform = glm::translate(glm::mat4(1.0f), {mPosition.x, mPosition.y, 0.0f});
 		transform = glm::rotate(transform, glm::radians(mRotation), glm::vec3(0.0f, 0.0f, 1.0f));
 
 		mViewMatrix = glm::inverse(transform);

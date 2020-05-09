@@ -96,7 +96,7 @@ namespace Asylum {
 		sResouceManagerData.Animations.clear();
 	}
 
-	Ref<Shader> ResourceManager::GetShader(const std::string& name)
+	const Ref<Shader>& ResourceManager::GetShader(const std::string& name)
 	{
 		return sResouceManagerData.Shaders[name];
 	}
@@ -111,17 +111,17 @@ namespace Asylum {
 		return allShaders;
 	}
 
-	Ref<Texture> ResourceManager::GetTexture(const std::string& name)
+	const Ref<Texture>& ResourceManager::GetTexture(const std::string& name)
 	{
 		return sResouceManagerData.Textures[name];
 	}
 
-	Ref<TextureAtlas> ResourceManager::GetTextureAtlas(const std::string& name)
+	const Ref<TextureAtlas>& ResourceManager::GetTextureAtlas(const std::string& name)
 	{
 		return sResouceManagerData.TextureAtlases[name];
 	}
 
-	Ref<Animation> ResourceManager::GetAnimation(const std::string& name)
+	const Ref<Animation>& ResourceManager::GetAnimation(const std::string& name)
 	{
 		return sResouceManagerData.Animations[name];
 	}

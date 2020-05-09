@@ -96,7 +96,7 @@ namespace Asylum {
 
 		glfwSetKeyCallback(mWindow, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 			{
-				if (Editor::GetIsGameWindowActive())
+				if (Editor::IsGameWindowActive() || !Editor::IsEditorActive())
 				{
 					WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 					if (action == GLFW_PRESS || action == GLFW_REPEAT)
@@ -109,7 +109,7 @@ namespace Asylum {
 
 		glfwSetScrollCallback(mWindow, [](GLFWwindow* window, double xoffset, double yoffset)
 			{
-				if (Editor::GetIsGameWindowActive())
+				if (Editor::IsGameWindowActive() || !Editor::IsEditorActive())
 				{
 					WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
 					for (auto& fn : data.ScrollCallbacks)

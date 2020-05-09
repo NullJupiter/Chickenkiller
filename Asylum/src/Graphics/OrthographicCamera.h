@@ -12,7 +12,7 @@ namespace Asylum {
 		glm::mat4 mProjectionMatrix;
 		glm::mat4 mViewProjectionMatrix;
 
-		glm::vec3 mPosition;
+		glm::vec2 mPosition;
 		float mRotation;
 
 
@@ -21,10 +21,10 @@ namespace Asylum {
 
 		void SetProjection(float left, float right, float bottom, float top, float zNear = -1.0f, float zFar = 1.0f);
 
-		void SetPosition(const glm::vec3& position) { mPosition = position; RecalculateViewMatrix(); };
-		void SetRotation(float rotation) { mRotation = rotation; RecalculateViewMatrix(); };
+		void SetPosition(const glm::vec2& position) { mPosition = position; RecalculateViewMatrix(); };
+		void SetRotation(float angle) { mRotation = angle; RecalculateViewMatrix(); };
 
-		inline const glm::vec3& GetPosition() const { return mPosition; };
+		inline const glm::vec2& GetPosition() const { return mPosition; };
 		inline float GetRotation() const { return mRotation; };
 
 		inline const glm::mat4& GetViewMatrix() const { return mViewMatrix; };

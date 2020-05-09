@@ -4,9 +4,6 @@
 
 class GameLayer : public Asylum::Layer
 {
-private:
-	// camera
-	Asylum::Scope<Asylum::OrthographicCameraController> mCameraController;
 public:
 	GameLayer();
 
@@ -14,6 +11,8 @@ public:
 
 	void OnDetach() override;
 	void OnAttach() override;
+
+	void AddEventCallbacks() override;
 private:
 	void OnKeyPressed(int keycode);
 };

@@ -5,6 +5,9 @@
 #include "Core/ResourceManager.h"
 #include "Core/Entity/EntitySystem.h"
 #include "Editor/ImGuiManager.h"
+#include "Core/KeyCodes.h"
+#include "Editor/Editor.h"
+#include "Graphics/OrthographicCameraController.h"
 
 namespace Asylum {
 
@@ -14,6 +17,9 @@ namespace Asylum {
 		mWindow = Window::Get();
 		mWindow->Init(WindowProps("Asylum Engine"));
 		mWindow->SetClearColor(45, 57, 68);
+
+		// event callbacks
+		Input::AddKeyPressedCallback(AM_BIND_FN_1(Application::OnKeyPressed));
 
 		// init renderer
 		Renderer::Init();
@@ -37,6 +43,9 @@ namespace Asylum {
 		for (int i = 0; i < 8; i++)
 			samplers[i] = i;
 		defaultShader->SetUniformIntArray("uTextures", 8, samplers);
+
+		// init camera controller
+		OrthographicCameraController::Get()->Init((float)Window::Get()->GetWidth() / (float)Window::Get()->GetHeight());
 
 		// init layer stack
 		mLayerStack = new LayerStack();
@@ -84,8 +93,14 @@ namespace Asylum {
 			// clear the frame buffer
 			mWindow->Clear();
 
+			// update the camera controller
+			OrthographicCameraController::Get()->OnUpdate(mDeltaTime);
+
+
 			// update all layers in layer stack
+			Editor::BeginCustomRender();
 			UpdateAllLayers(mDeltaTime);
+			Editor::EndCustomRender();
 
 			// call client update method for application control
 			OnUpdate(mDeltaTime);
@@ -101,4 +116,11 @@ namespace Asylum {
 			layer->OnUpdate(mDeltaTime);
 	}
 
+	void Application::OnKeyPressed(int keycode)
+	{
+		if (keycode == AM_KEY_F1)
+		{
+			Editor::SetEditorIsActive(!Editor::IsEditorActive());
+		}
+	}
 }
