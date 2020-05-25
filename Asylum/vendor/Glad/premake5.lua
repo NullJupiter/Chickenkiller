@@ -13,13 +13,17 @@ project "Glad"
         "src/glad.c"
     }
 
-    includedirs
+    sysincludedirs
     {
         "include"
     }
     
     filter "system:windows"
         systemversion "latest"
+
+    filter "system:darwin"
+        systemversion "latest"
+	xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }
 
     filter "configurations:Debug"
         runtime "Debug"

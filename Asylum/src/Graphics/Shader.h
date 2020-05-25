@@ -2,6 +2,7 @@
 
 #include <string>
 #include <glm/glm.hpp>
+#include <unordered_map>
 
 namespace Asylum {
 

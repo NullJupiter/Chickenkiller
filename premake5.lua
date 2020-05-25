@@ -39,7 +39,7 @@ project "Asylum"
 	targetdir ("bin/" .. outputDir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputDir .. "/%{prj.name}")
 
-	pchheader "ampch.h"
+	pchheader "src/ampch.h"
 	pchsource "Asylum/src/ampch.cpp"
 
 	files {
@@ -56,7 +56,7 @@ project "Asylum"
 		"_CRT_SECURE_NO_WARNINGS",
 	}
 
-	includedirs {
+	sysincludedirs {
 		"%{prj.name}/",
 		"%{prj.name}/src",
 		"%{IncludeDir.GLFW}",
@@ -71,6 +71,14 @@ project "Asylum"
 
 		defines {
 			"AM_PLATFORM_WINDOWS",
+			"GLFW_INCLUDE_NONE"
+		}
+
+	filter "system:darwin"
+		systemversion "latest"
+		xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }		
+		defines {
+			"AM_PLATFORM_DARWIN",
 			"GLFW_INCLUDE_NONE"
 		}
 
@@ -102,7 +110,7 @@ project "Asylum"
 		runtime "Release"
 		optimize "on"
 
-		includedirs {
+		sysincludedirs {
 			"%{prj.name}/",
 			"%{prj.name}/src",
 			"%{IncludeDir.GLFW}",
@@ -123,7 +131,7 @@ project "Asylum"
 		runtime "Release"
 		optimize "on"
 
-		includedirs {
+		sysincludedirs {
 			"%{prj.name}/",
 			"%{prj.name}/src",
 			"%{IncludeDir.GLFW}",
@@ -154,7 +162,7 @@ project "Chickenkiller"
 		"%{prj.name}/src/**.cpp"
 	}
 
-	includedirs {
+	sysincludedirs {
 		"Asylum/src",
 		"%{prj.name}/src",
 		"%{IncludeDir.GLFW}",
@@ -163,6 +171,7 @@ project "Chickenkiller"
 	}
 
 	links {
+		"GLFW",
 		"Asylum"
 	}
 
@@ -170,6 +179,14 @@ project "Chickenkiller"
 		systemversion "latest"
 		defines {
 			"AM_PLATFORM_WINDOWS"
+		}
+
+	filter "system:darwin"
+		systemversion "latest"
+		links { "Cocoa.framework", "CoreVideo.framework", "IOKit.framework" }
+		xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }
+		defines {
+			"AM_PLATFORM_DARWIN"
 		}
 
 	filter "configurations:Debug"

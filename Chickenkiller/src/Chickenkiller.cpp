@@ -8,6 +8,8 @@
 	#else
 		int main()
 	#endif
+#elif AM_PLATFORM_DARWIN
+    int main()
 #endif
 {
 	// create application

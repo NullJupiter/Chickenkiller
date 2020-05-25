@@ -3,6 +3,10 @@
 **.vcxproj
 **.sln
 
+**.xcworkspace
+**.xcodeproj
+.DS_Store
+
 bin/
 bin-int/
 .vs/
