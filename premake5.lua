@@ -39,7 +39,7 @@ project "Asylum"
 	targetdir ("bin/" .. outputDir .. "/%{prj.name}")
 	objdir ("bin-int/" .. outputDir .. "/%{prj.name}")
 
-	pchheader "src/ampch.h"
+	pchheader "ampch.h"
 	pchsource "Asylum/src/ampch.cpp"
 
 	files {
@@ -77,6 +77,7 @@ project "Asylum"
 	filter "system:darwin"
 		systemversion "latest"
 		xcodebuildsettings = { ["ALWAYS_SEARCH_USER_PATHS"] = "YES" }		
+		pchheader "src/ampch.h"
 		defines {
 			"AM_PLATFORM_DARWIN",
 			"GLFW_INCLUDE_NONE"
