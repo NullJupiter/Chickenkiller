@@ -5,6 +5,7 @@
 #include <glm/glm.hpp>
 #include "Graphics/Shader.h"
 #include "Graphics/Animation.h"
+#include "Graphics/Framebuffer.h"
 
 namespace Asylum {
 
@@ -22,8 +23,8 @@ namespace Asylum {
 		static void Init();
 		static void Shutdown();
 
-		static void DrawToFramebuffer(bool useFramebuffer);
-		static uint32_t GetFramebufferRender();
+		static void BindFramebuffer(const Ref<Framebuffer>& fb);
+		static void UnbindFramebuffer();
 
 		// draw cicle
 		static void BeginDraw();

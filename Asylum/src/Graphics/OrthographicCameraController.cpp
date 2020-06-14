@@ -2,7 +2,6 @@
 #include "OrthographicCameraController.h"
 
 #include "Core/KeyCodes.h"
-#include "Editor/Editor.h"
 
 namespace Asylum {
 
@@ -35,11 +34,9 @@ namespace Asylum {
 
 	void OrthographicCameraController::OnUpdate(float dt)
 	{
-		static bool setupEditorVars = true;
+		/*static bool setupEditorVars = true;
 		static bool setupGameVars = true;
 
-		if (Editor::IsEditorActive())
-		{
 			// setup editor members when switched to editor mode
 			if (setupEditorVars)
 			{
@@ -51,7 +48,7 @@ namespace Asylum {
 				setupEditorVars = false;
 				setupGameVars = true;
 			}
-
+			
 			OnEditorUpdate(dt);
 		}
 		else 
@@ -69,7 +66,7 @@ namespace Asylum {
 			}
 
 			OnGameUpdate(dt);
-		}
+		}*/
 	}
 
 	void OrthographicCameraController::UpdateProjection(float aspectRatio)

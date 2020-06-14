@@ -37,10 +37,6 @@ namespace Asylum {
 
 		std::array<glm::vec4, 4> DefaultRectVertices;
 		std::array<glm::vec2, 4> DefaultRectTexCoords;
-
-		// framebuffer
-		uint32_t FBO = 0;
-		uint32_t FramebufferColorTexture = 0;
 	};
 
 	static RendererProperties sRendererData;
@@ -124,22 +120,6 @@ namespace Asylum {
 		sRendererData.DefaultRectTexCoords[1] = { 1.0f, 0.0f };
 		sRendererData.DefaultRectTexCoords[2] = { 1.0f, 1.0f };
 		sRendererData.DefaultRectTexCoords[3] = { 0.0f, 1.0f };
-
-		// create framebuffer object
-		glGenFramebuffers(1, &sRendererData.FBO);
-		glBindFramebuffer(GL_FRAMEBUFFER, sRendererData.FBO);
-		
-		// create framebuffer texture attachment
-		glGenTextures(1, &sRendererData.FramebufferColorTexture);
-		glBindTexture(GL_TEXTURE_2D, sRendererData.FramebufferColorTexture);
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, Window::Get()->GetWidth(), Window::Get()->GetHeight(), 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-		glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, sRendererData.FramebufferColorTexture, 0);
-
-		if (glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE)
-			LOG("Framebuffer isn't complete!");
-		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
 	void Renderer::Shutdown()
@@ -151,25 +131,20 @@ namespace Asylum {
 
 		// delete the 1x1 white texturee
 		glDeleteTextures(1, &sRendererData.WhiteTexture);
-
-		// delete framebuffer object
-		glDeleteFramebuffers(1, &sRendererData.FBO);
 		
 		// delete the CPU vertex buffer
 		delete[] sRendererData.RectBuffer;
 	}
 
-	void Renderer::DrawToFramebuffer(bool useFramebuffer)
+	// FRAMEBUFFER API
+	void Renderer::BindFramebuffer(const Ref<Framebuffer>& fb)
 	{
-		if (useFramebuffer)
-			glBindFramebuffer(GL_FRAMEBUFFER, sRendererData.FBO);
-		else
-			glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glBindFramebuffer(GL_FRAMEBUFFER, fb->GetFramebuffer());
 	}
 
-	uint32_t Renderer::GetFramebufferRender()
+	void Renderer::UnbindFramebuffer()
 	{
-		return sRendererData.FramebufferColorTexture;
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
 	}
 
 	void Renderer::BeginDraw()

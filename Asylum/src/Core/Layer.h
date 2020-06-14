@@ -8,10 +8,10 @@ namespace Asylum {
 		Layer() {};
 		virtual ~Layer() = default;
 
-		virtual void OnUpdate(float dt) {};
+		virtual void OnUpdate(float dt) = 0;
 
-		virtual void OnAttach() {};
-		virtual void OnDetach() {};
+		virtual void OnAttach() = 0;
+		virtual void OnDetach() = 0;
 
 		virtual void AddEventCallbacks() {};
 	};

@@ -1,7 +1,6 @@
 #include "ampch.h"
 #include "EntitySystem.h"
 
-#include "Editor/Editor.h"
 #include "Graphics/Renderer.h"
 
 namespace Asylum {
@@ -109,15 +108,12 @@ namespace Asylum {
 
 	void EntitySystem::OnUpdate(float dt)
 	{
-		if (!Editor::IsEditorActive())
+		// update all registered entities
+		for (auto& entityData : sData.EntitiesData)
 		{
-			// update all registered entities
-			for (auto& entityData : sData.EntitiesData)
-			{
-				// if the entity is active update
-				if (entityData.EntityObject->IsActive())
-					entityData.EntityObject->OnUpdate(dt);
-			}
+			// if the entity is active update
+			if (entityData.EntityObject->IsActive())
+				entityData.EntityObject->OnUpdate(dt);
 		}
 	}
 

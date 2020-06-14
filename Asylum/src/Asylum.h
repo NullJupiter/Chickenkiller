@@ -17,9 +17,7 @@
 #include "Graphics/Shader.h"
 #include "Graphics/OrthographicCameraController.h"
 #include "Graphics/Animation.h"
-
-// Editor
-#include "Editor/Editor.h"
+#include "Graphics/Framebuffer.h"
 
 // Utils
 #include "Utils/Utils.h"

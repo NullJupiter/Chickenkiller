@@ -2,7 +2,6 @@
 #include "Window.h"
 
 #include "Core/Log.h" 
-#include "Editor/Editor.h"
 
 namespace Asylum {
 
@@ -96,25 +95,19 @@ namespace Asylum {
 
 		glfwSetKeyCallback(mWindow, [](GLFWwindow* window, int key, int scancode, int action, int mods)
 			{
-				if (Editor::IsGameWindowActive() || !Editor::IsEditorActive())
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+				if (action == GLFW_PRESS || action == GLFW_REPEAT)
 				{
-					WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-					if (action == GLFW_PRESS || action == GLFW_REPEAT)
-					{
-						for (auto& fn : data.KeyPressedCallbacks)
-							fn(key);
-					}
+					for (auto& fn : data.KeyPressedCallbacks)
+						fn(key);
 				}
 			});
 
 		glfwSetScrollCallback(mWindow, [](GLFWwindow* window, double xoffset, double yoffset)
 			{
-				if (Editor::IsGameWindowActive() || !Editor::IsEditorActive())
-				{
-					WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
-					for (auto& fn : data.ScrollCallbacks)
-						fn((float)xoffset, (float)yoffset);
-				}
+				WindowData& data = *(WindowData*)glfwGetWindowUserPointer(window);
+				for (auto& fn : data.ScrollCallbacks)
+					fn((float)xoffset, (float)yoffset);
 			});
 	}
 

@@ -4,9 +4,7 @@
 #include "Graphics/Renderer.h"
 #include "Core/ResourceManager.h"
 #include "Core/Entity/EntitySystem.h"
-#include "Editor/ImGuiManager.h"
 #include "Core/KeyCodes.h"
-#include "Editor/Editor.h"
 #include "Graphics/OrthographicCameraController.h"
 
 namespace Asylum {
@@ -23,11 +21,6 @@ namespace Asylum {
 
 		// init renderer
 		Renderer::Init();
-
-#ifdef AM_DEBUG
-		// init imgui
-		ImGuiManager::Init();
-#endif
 
 		// load resources
 		ResourceManager::LoadResources("res/config");
@@ -57,11 +50,6 @@ namespace Asylum {
 
 		// unload resources
 		ResourceManager::UnloadResources();
-
-#ifdef AM_DEBUG
-		// shut imgui down
-		ImGuiManager::Shutdown();
-#endif
 
 		// shut down the renderer
 		Renderer::Shutdown();
@@ -96,11 +84,8 @@ namespace Asylum {
 			// update the camera controller
 			OrthographicCameraController::Get()->OnUpdate(mDeltaTime);
 
-
 			// update all layers in layer stack
-			Editor::BeginCustomRender();
 			UpdateAllLayers(mDeltaTime);
-			Editor::EndCustomRender();
 
 			// call client update method for application control
 			OnUpdate(mDeltaTime);
@@ -118,9 +103,6 @@ namespace Asylum {
 
 	void Application::OnKeyPressed(int keycode)
 	{
-		if (keycode == AM_KEY_F1)
-		{
-			Editor::SetEditorIsActive(!Editor::IsEditorActive());
-		}
+
 	}
 }

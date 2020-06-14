@@ -29,11 +29,8 @@ void GameLayer::OnUpdate(float dt)
 {
 	// updating
 	{
-		if (Asylum::Editor::IsGameWindowActive())
-		{
-			// update all entities
-			Asylum::EntitySystem::OnUpdate(dt);
-		}
+		// update all entities
+		Asylum::EntitySystem::OnUpdate(dt);
 	}
 
 	// rendering
