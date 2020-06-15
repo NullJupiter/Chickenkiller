@@ -2,11 +2,12 @@
 
 #include <Asylum.h>
 
-class Viewport
+#include "EditorWindows/EditorWindow.h"
+
+class Viewport : public EditorWindow
 {
 private:
 	glm::vec2 mSize;
-	bool mIsWindowActive = true;
 	Asylum::Ref<Asylum::Framebuffer> mViewportFB;
 public:
 	Viewport();

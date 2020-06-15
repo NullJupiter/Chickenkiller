@@ -19,6 +19,10 @@ Player::Player(const glm::vec2& position, const glm::vec2& size)
 	mAnimations.push_back(Asylum::ResourceManager::GetAnimation("player-right"));
 
 	mCurrentAnimation = mAnimations[Animations::PlayerDown];
+
+	Asylum::OrthographicCameraController* cameraController = Asylum::OrthographicCameraController::Get();
+	cameraController->SetMinZoomLevel(5.0f);
+	cameraController->SetMaxZoomLevel(7.0f);
 }
 
 void Player::OnUpdate(float dt)

@@ -1,22 +1,29 @@
 #include "Viewport.h"
 
 #include <imgui.h>
+#include "ViewportCamera/ViewportCameraController.h"
 
 Viewport::Viewport()
 {
 	mSize = { 0.0f, 0.0f };
+	ViewportCameraController::Get()->Init(mSize);
+	
 	mViewportFB = Asylum::CreateRef<Asylum::Framebuffer>(Asylum::FramebufferSpecs(Asylum::Window::Get()->GetWidth(), Asylum::Window::Get()->GetHeight()));
 }
 
 void Viewport::OnUpdate(float dt)
 {
 	static Asylum::OrthographicCameraController* cameraController = Asylum::OrthographicCameraController::Get();
-	
+	static ViewportCameraController* viewportCameraController = ViewportCameraController::Get();
+
+	// update the vieport camera controller for movement in the viewport
+	viewportCameraController->OnUpdate(dt, mSize);
+
 	// create imgui window
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
 	ImGui::Begin("Viewport");
 	ImGui::PopStyleVar();
-	mIsWindowActive = ImGui::IsWindowFocused();
+	mIsActive = ImGui::IsWindowFocused();
 
 	// update size and projection matrix
 	ImVec2 windowSize = ImGui::GetWindowSize();
@@ -31,6 +38,9 @@ void Viewport::OnUpdate(float dt)
 	Asylum::Window::Get()->Clear();
 
 	// render stuff to framebuffer
+	// update and render all entities
+	Asylum::EntitySystem::OnUpdate(dt);
+	Asylum::EntitySystem::OnRender();
 
 	// stop rendering to viewport
 	Asylum::Renderer::UnbindFramebuffer();

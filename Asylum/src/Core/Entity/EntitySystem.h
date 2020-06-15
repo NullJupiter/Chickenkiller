@@ -34,7 +34,8 @@ namespace Asylum {
 		static void OnUpdate(float dt);
 		static void OnRender();
 
-		static const std::vector<EntityData>& GetAllEntityData();
+		static std::vector<EntityData>& GetAllEntityData();
+		//static const std::vector<EntityData>& GetAllEntityData();
 		static const EntityData& GetEntityData(std::string name);
 		static void SetEntityShader(const std::string& entityName, const Ref<Shader>& shader);
 	};

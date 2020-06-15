@@ -2,20 +2,46 @@
 
 #include "ImGui/ImGuiManager.h"
 
+class TestEntity : public Asylum::Entity
+{
+public:
+    TestEntity(const glm::vec2& position, const glm::vec2& size)
+        : Entity(position, size)
+    {}
+
+    virtual void OnUpdate(float dt)
+    {
+
+    }
+    virtual void OnRender()
+    {
+        Asylum::Renderer::DrawRectangle(mPosition, mSize, {255, 255, 255, 255}, 0.0f);
+    }
+};
+
 EditorLayer::EditorLayer()
 {
 	// create windows
+    mMainMenuWindow = Asylum::CreateScope<MainMenu>();
 	mViewportWindow = Asylum::CreateScope<Viewport>();
+    mEntityListWindow = Asylum::CreateScope<EntityList>();
 }
 
 void EditorLayer::OnAttach()
 {
 	ImGuiManager::Init();
+
+    Asylum::EntitySystem::RegisterEntity(Asylum::EntityData("TestEntity", Asylum::CreateRef<TestEntity>(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f)), "default"));
+    Asylum::EntitySystem::RegisterEntity(Asylum::EntityData("TestEntity2", Asylum::CreateRef<TestEntity>(glm::vec2(1.0f, 0.0f), glm::vec2(1.0f, 1.0f)), "default"));
+    Asylum::EntitySystem::RegisterEntity(Asylum::EntityData("TestEntity3", Asylum::CreateRef<TestEntity>(glm::vec2(2.0f, 0.0f), glm::vec2(1.0f, 1.0f)), "default"));
+    Asylum::EntitySystem::RegisterEntity(Asylum::EntityData("TestEntity4", Asylum::CreateRef<TestEntity>(glm::vec2(3.0f, 0.0f), glm::vec2(1.0f, 1.0f)), "default"));
 }
 
 void EditorLayer::OnDetach()
 {
 	ImGuiManager::Shutdown();
+
+    Asylum::EntitySystem::RemoveAllEntities();
 }
 
 void EditorLayer::OnUpdate(float dt)
@@ -26,21 +52,10 @@ void EditorLayer::OnUpdate(float dt)
     // create the dockspace
     CreateDockSpace();
 
-    // main menu bar
-    if (ImGui::BeginMenuBar())
-    {
-        if (ImGui::BeginMenu("Asylum"))
-        {
-            if (ImGui::MenuItem("About"));
-            if (ImGui::MenuItem("Quit")) Asylum::Window::Get()->Close();
-            ImGui::EndMenu();
-        }
-
-        ImGui::EndMenuBar();
-    }
-
 	// update all imgui windows
+    mMainMenuWindow->OnUpdate(dt);
 	mViewportWindow->OnUpdate(dt);
+    mEntityListWindow->OnUpdate(dt);
 
     // end dockspace
     ImGui::End();

@@ -46,10 +46,15 @@ namespace Asylum {
 		}
 	}
 
-	const std::vector<EntityData>& EntitySystem::GetAllEntityData()
+	std::vector<EntityData>& EntitySystem::GetAllEntityData()
 	{
 		return sData.EntitiesData;
 	}
+
+	/*const std::vector<EntityData>& EntitySystem::GetAllEntityData()
+	{
+		return sData.EntitiesData;
+	}*/
 
 	const EntityData& EntitySystem::GetEntityData(std::string name)
 	{

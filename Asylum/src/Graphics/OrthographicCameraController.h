@@ -8,24 +8,19 @@ namespace Asylum {
 	{
 	private:
 		static OrthographicCameraController* sInstance;
-
+	protected:
 		float mAspectRatio;
 		float mZoomLevel = 1.0f;
 		float mMinZoomLevel = 0.25f;
 		float mMaxZoomLevel = 5.0f;
 		OrthographicCamera* mCamera;
 
-		bool mRotation;
-		int mCounter = 0;
 		glm::vec3 mCameraPosition;
 		float mCameraRotation;
-		float mCameraTranslationSpeed, mCameraRotationSpeed;
-
-		bool mShouldUpdateProjection = false;
 	public:
 		static OrthographicCameraController* Get();
 
-		void Init(float aspectRatio, bool rotation = false);
+		void Init(float aspectRatio);
 
 		void OnUpdate(float dt);
 		void UpdateProjection(float aspectRatio);
@@ -40,12 +35,16 @@ namespace Asylum {
 
 		inline float GetZoomLevel() const { return mZoomLevel; };
 		void SetZoomLevel(float zoomLevel) { mZoomLevel = zoomLevel; };
+		void SetMaxZoomLevel(float level) { mMaxZoomLevel = level; };
+		void SetMinZoomLevel(float level) 
+		{
+			mMinZoomLevel = level;
+			mZoomLevel = level;
+			mCamera->SetProjection(-mAspectRatio * mZoomLevel, mAspectRatio * mZoomLevel, -mZoomLevel, mZoomLevel);
+		};
 	private:
 		OrthographicCameraController() {};
 		~OrthographicCameraController() = default;
-
-		void OnEditorUpdate(float dt);
-		void OnGameUpdate(float dt);
 
 		void OnMouseScrolled(float xoffset, float yoffset);
 		void OnWindowResized(int width, int height);
