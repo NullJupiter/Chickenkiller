@@ -1,27 +1,18 @@
 #include "ViewportCameraController.h"
 
-ViewportCameraController* ViewportCameraController::sInstance = nullptr;
 
-ViewportCameraController* ViewportCameraController::Get()
-{
-	if (sInstance == nullptr) sInstance = new ViewportCameraController();
-	return sInstance;
-}
-
-void ViewportCameraController::Init(const glm::vec2& viewportSize) 
+ViewportCameraController::ViewportCameraController()
 {
 	Asylum::OrthographicCameraController* cameraController = Asylum::OrthographicCameraController::Get();
 	cameraController->SetZoomLevel(3.0f);
 	cameraController->SetMinZoomLevel(0.5f);
 	cameraController->SetMaxZoomLevel(10.0f);
 
-	mViewportSize = viewportSize;
+	mViewportSize = {0.0f, 0.0f};
 	mCameraPosition = { 0.0f, 0.0f };
 	mCameraRotation = 0.0f;
 	mCameraRotationSpeed = 180.0f;
 	mCameraTranslationSpeed = cameraController->GetZoomLevel();
-
-	//cameraController->UpdateProjection(mViewportSize.x / mViewportSize.y);
 }
 
 void ViewportCameraController::OnUpdate(float dt, const glm::vec2& viewportSize)

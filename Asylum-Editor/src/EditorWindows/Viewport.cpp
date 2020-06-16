@@ -5,18 +5,16 @@
 
 Viewport::Viewport()
 {
+	mViewportCameraController = ViewportCameraController();
 	mSize = { 0.0f, 0.0f };
-	ViewportCameraController::Get()->Init(mSize);
-	
+
 	mViewportFB = Asylum::CreateRef<Asylum::Framebuffer>(Asylum::FramebufferSpecs(Asylum::Window::Get()->GetWidth(), Asylum::Window::Get()->GetHeight()));
 }
 
 void Viewport::OnUpdate(float dt)
 {
-	static ViewportCameraController* viewportCameraController = ViewportCameraController::Get();
-
 	// update the vieport camera controller for movement in the viewport
-	viewportCameraController->OnUpdate(dt, mSize);
+	mViewportCameraController.OnUpdate(dt, mSize);
 
 	// create imgui window
 	ImGui::PushStyleVar(ImGuiStyleVar_WindowPadding, ImVec2(0.0f, 0.0f));
