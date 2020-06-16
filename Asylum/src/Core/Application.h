@@ -23,10 +23,10 @@ namespace Asylum {
 
 		LayerStack* mLayerStack;
 	public:
-		Application() { Init(); };
+		Application(const std::string& applicationName) { Init(applicationName); };
 		~Application() { Shutdown(); };
 
-		void Init();
+		void Init(const std::string& applicationName);
 		void Shutdown();
 		void Run();
 	protected:
@@ -37,5 +37,8 @@ namespace Asylum {
 		void UpdateAllLayers(float dt);
 		void OnKeyPressed(int keycode);
 	};
+
+	// To be defined in CLIENT
+	Application* CreateApplication();
 
 }

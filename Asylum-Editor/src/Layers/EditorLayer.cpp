@@ -32,9 +32,9 @@ void EditorLayer::OnAttach()
 	ImGuiManager::Init();
 
     Asylum::EntitySystem::RegisterEntity(Asylum::EntityData("TestEntity", Asylum::CreateRef<TestEntity>(glm::vec2(0.0f, 0.0f), glm::vec2(1.0f, 1.0f)), "default"));
-    Asylum::EntitySystem::RegisterEntity(Asylum::EntityData("TestEntity2", Asylum::CreateRef<TestEntity>(glm::vec2(1.0f, 0.0f), glm::vec2(1.0f, 1.0f)), "default"));
-    Asylum::EntitySystem::RegisterEntity(Asylum::EntityData("TestEntity3", Asylum::CreateRef<TestEntity>(glm::vec2(2.0f, 0.0f), glm::vec2(1.0f, 1.0f)), "default"));
-    Asylum::EntitySystem::RegisterEntity(Asylum::EntityData("TestEntity4", Asylum::CreateRef<TestEntity>(glm::vec2(3.0f, 0.0f), glm::vec2(1.0f, 1.0f)), "default"));
+    Asylum::EntitySystem::RegisterEntity(Asylum::EntityData("TestEntity2", Asylum::CreateRef<TestEntity>(glm::vec2(1.1f, 0.0f), glm::vec2(1.0f, 1.0f)), "default"));
+    Asylum::EntitySystem::RegisterEntity(Asylum::EntityData("TestEntity3", Asylum::CreateRef<TestEntity>(glm::vec2(2.2f, 0.0f), glm::vec2(1.0f, 1.0f)), "default"));
+    Asylum::EntitySystem::RegisterEntity(Asylum::EntityData("TestEntity4", Asylum::CreateRef<TestEntity>(glm::vec2(3.3f, 0.0f), glm::vec2(1.0f, 1.0f)), "default"));
 }
 
 void EditorLayer::OnDetach()

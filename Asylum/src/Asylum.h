@@ -2,13 +2,13 @@
 
 // Core
 #include "Core/Core.h"
+#include "Core/Application.h"
 #include "Core/Log.h"
 #include "Core/LayerStack.h"
 #include "Core/Input.h"
 #include "Core/KeyCodes.h"
 #include "Core/MouseButtonCodes.h"
 #include "Core/ResourceManager.h"
-#include "Core/Application.h"
 #include "Core/Entity/EntitySystem.h"
 
 // Graphics

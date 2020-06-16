@@ -1,7 +1,5 @@
 #include "GameLayer.h"
 
-#include "App.h"
-
 // include all entities
 #include "Entities/Player.h"
 #include "Entities/Enemy.h"

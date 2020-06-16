@@ -1,25 +1,57 @@
-#include "App.h"
+#include <Asylum.h>
+#include <Core/EntryPoint.h>
 
-#ifdef AM_PLATFORM_WINDOWS
-#include <Windows.h>
+#include "Layers/EditorLayer.h"
 
-#ifndef AM_DEBUG
-	INT WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, PSTR lpCmdLine, INT nCmdShow)
-#else
-	int main()
-#endif
-#elif AM_PLATFORM_DARWIN
-	int main()
-#endif
+class AsylumEditor : public Asylum::Application
 {
-	// create application
-	App* app = new App();
+private:
+	Asylum::Layer* mEditorLayer;
+public:
+	AsylumEditor() : Asylum::Application("Asylum Editor") { OnStartup(); }
+	~AsylumEditor() { OnShutdown(); }
 
-	// run the application
-	app->Run();
+	virtual void OnStartup() override
+	{
+		// set window properties
+		mWindow->SetVSync(false);
 
-	// delete the application
-	delete app;
+		// init all layers
+		mEditorLayer = new EditorLayer();
 
-	return 0;
+		mLayerStack->PushLayer(mEditorLayer);
+
+		// set event callbacks
+		Asylum::Input::AddKeyPressedCallback(AM_BIND_FN_1(AsylumEditor::OnKeyPressed));
+	}
+
+	virtual void OnShutdown() override
+	{
+
+	}
+
+	virtual void OnUpdate(float dt) override
+	{
+
+	}
+private:
+	void OnKeyPressed(int keycode)
+	{
+		// toggle fullscreen
+		static bool isFullscreen = false;
+		if (keycode == AM_KEY_F6)
+		{
+			if (!isFullscreen)
+				mWindow->SetFullscreenMode();
+			else
+				mWindow->SetWindowedMode(50, 50, 1280, 720);
+
+			isFullscreen = !isFullscreen;
+		}
+	}
+};
+
+Asylum::Application* Asylum::CreateApplication()
+{
+	return new AsylumEditor();
 }

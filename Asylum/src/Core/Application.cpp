@@ -9,11 +9,11 @@
 
 namespace Asylum {
 
-	void Application::Init()
+	void Application::Init(const std::string& applicationName)
 	{
 		// create window
 		mWindow = Window::Get();
-		mWindow->Init(WindowProps("Asylum Engine"));
+		mWindow->Init(WindowProps(applicationName));
 		mWindow->SetClearColor(45, 57, 68);
 
 		// event callbacks
