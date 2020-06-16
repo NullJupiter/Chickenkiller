@@ -74,6 +74,8 @@ namespace Asylum {
 		void SetFullscreenMode();
 		void SetWindowedMode(uint32_t xpos, uint32_t ypos, uint32_t width, uint32_t height);
 
+		void SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) const;
+
 	private:
 		Window() : mWindow(nullptr) {};
 		~Window() = default;

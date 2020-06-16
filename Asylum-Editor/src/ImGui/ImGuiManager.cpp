@@ -31,7 +31,7 @@ void ImGuiManager::Init()
     }
 
     // Setup Platform/Renderer bindings
-    ImGui_ImplGlfw_InitForOpenGL(Asylum::Window::Get()->GetNativeWindow(), true);
+    ImGui_ImplGlfw_InitForOpenGL(glfwGetCurrentContext(), true);
     ImGui_ImplOpenGL3_Init("#version 330");
 
     // Set custom imgui style

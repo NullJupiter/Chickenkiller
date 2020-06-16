@@ -20,10 +20,10 @@ namespace Asylum {
 	class Framebuffer
 	{
 	private:
+		FramebufferSpecs mSpecification;
+
 		uint32_t mFramebuffer = 0;
 		uint32_t mColorAttachement = 0;
-
-		glm::vec2 mSize;
 	public:
 		Framebuffer(const FramebufferSpecs& specs);
 		~Framebuffer();
@@ -31,7 +31,9 @@ namespace Asylum {
 		inline uint32_t GetFramebuffer() const { return mFramebuffer; };
 		inline uint32_t GetColorAttachment() const { return mColorAttachement; };
 
-		void SetSize(const glm::vec2& size);
+		void Resize(uint32_t width, uint32_t height);
+	private:
+		void Init();
 	};
 
 }

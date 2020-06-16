@@ -4,7 +4,7 @@
 namespace Asylum {
 
 	OrthographicCamera::OrthographicCamera(float left, float right, float bottom, float top, float zNear, float zFar)
-		: mPosition(glm::vec3(0.0f)), mRotation(0.0f)
+		: mPosition(glm::vec3(0.0f)), mRotation(0.0f), mViewMatrix(1.0f)
 	{
 		SetProjection(left, right, bottom, top, zNear, zFar);
 		RecalculateViewMatrix();

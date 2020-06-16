@@ -153,4 +153,9 @@ namespace Asylum {
 		glfwSetWindowMonitor(mWindow, NULL, xpos, ypos, width, height, 0);
 	}
 
+	void Window::SetViewport(uint32_t x, uint32_t y, uint32_t width, uint32_t height) const
+	{
+		glViewport(x, y, width, height);
+	}
+
 }

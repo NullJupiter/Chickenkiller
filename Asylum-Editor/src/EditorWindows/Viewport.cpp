@@ -13,7 +13,6 @@ Viewport::Viewport()
 
 void Viewport::OnUpdate(float dt)
 {
-	static Asylum::OrthographicCameraController* cameraController = Asylum::OrthographicCameraController::Get();
 	static ViewportCameraController* viewportCameraController = ViewportCameraController::Get();
 
 	// update the vieport camera controller for movement in the viewport
@@ -26,12 +25,16 @@ void Viewport::OnUpdate(float dt)
 	mIsActive = ImGui::IsWindowFocused();
 
 	// update size and projection matrix
-	ImVec2 windowSize = ImGui::GetWindowSize();
+	ImVec2 windowSize = ImGui::GetContentRegionAvail();
 	if (windowSize.x != mSize.x || windowSize.y != mSize.y)
-		cameraController->UpdateProjection(windowSize.x / windowSize.y);
+	{
+		Asylum::Window::Get()->SetViewport(0, 0, (uint32_t)windowSize.x, (uint32_t)windowSize.y);
+		mViewportFB->Resize((uint32_t)windowSize.x, (uint32_t)windowSize.y);
 
-	mSize.x = windowSize.x;
-	mSize.y = windowSize.y;
+		mSize.x = windowSize.x;
+		mSize.y = windowSize.y;
+	}
+
 
 	// render to viewport
 	Asylum::Renderer::BindFramebuffer(mViewportFB);
@@ -46,9 +49,8 @@ void Viewport::OnUpdate(float dt)
 	Asylum::Renderer::UnbindFramebuffer();
 
 	// render framebuffer to viewport window
-	ImVec2 pos = ImGui::GetCursorScreenPos();
 	uint32_t framebufferTexture = mViewportFB->GetColorAttachment();
-	ImGui::GetWindowDrawList()->AddImage((void*)framebufferTexture, ImVec2(pos.x, pos.y), ImVec2(pos.x + mSize.x, pos.y + mSize.y), ImVec2(0, 1), ImVec2(1, 0));
+	ImGui::Image((void*)framebufferTexture, ImVec2{ mSize.x, mSize.y }, ImVec2{ 0,1 }, ImVec2{ 1,0 });
 
 	// end imgui window
 	ImGui::End();
