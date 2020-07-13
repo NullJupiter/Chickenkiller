@@ -14,8 +14,9 @@ void TextureList::OnUpdate(float dt)
 	const std::unordered_map<std::string, Asylum::Ref<Asylum::Texture>>& textures = Asylum::ResourceManager::GetAllTextureData();
 	for (auto& textureData : textures)
 	{
-		LOG("bla");
-		ImGui::ImageButton((void*)textureData.second->GetID(), ImVec2(32, 32), ImVec2(0, 0), ImVec2(32.0f, 32.0f), 2, ImColor(0, 0, 0, 255));
+		if (ImGui::ImageButton((void*)textureData.second->GetID(), ImVec2(128, 128), ImVec2(0, 1), ImVec2(1, 0)))
+			mCurrentlySelectedTexture = textureData.second;
+		ImGui::Text(textureData.first.c_str());
 	}
 
 	ImGui::End();

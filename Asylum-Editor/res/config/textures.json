@@ -7,7 +7,7 @@
         }, 
         {
             "name": "test-texture2",
-            "file-path": "res/textures/logo2.png",
+            "file-path": "res/textures/baum.png",
             "color-format": "RGBA"
         }
     ],

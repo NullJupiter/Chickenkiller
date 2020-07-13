@@ -47,7 +47,7 @@ void EditorLayer::OnDetach()
 void EditorLayer::OnUpdate(float dt)
 {
     // begin new imgui frame
-	ImGuiManager::Begin();
+    ImGuiManager::Begin();
 
     // create the dockspace
     CreateDockSpace();
