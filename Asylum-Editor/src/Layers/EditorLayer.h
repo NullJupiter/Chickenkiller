@@ -12,7 +12,7 @@ private:
 	// editor windows
 	Asylum::Scope<MainMenu> mMainMenuWindow;
 	Asylum::Scope<Viewport> mViewportWindow;
-	Asylum::Scope<TextureList> mEntityListWindow;
+	Asylum::Scope<TextureList> mTextureListWindow;
 public:
 	EditorLayer();
 
