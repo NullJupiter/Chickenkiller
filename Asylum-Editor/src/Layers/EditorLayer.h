@@ -4,7 +4,7 @@
 
 #include "EditorWindows/MainMenu.h"
 #include "EditorWindows/Viewport.h"
-#include "EditorWindows/EntityList.h"
+#include "EditorWindows/TextureList.h"
 
 class EditorLayer : public Asylum::Layer
 {
@@ -12,7 +12,7 @@ private:
 	// editor windows
 	Asylum::Scope<MainMenu> mMainMenuWindow;
 	Asylum::Scope<Viewport> mViewportWindow;
-	Asylum::Scope<EntityList> mEntityListWindow;
+	Asylum::Scope<TextureList> mEntityListWindow;
 public:
 	EditorLayer();
 

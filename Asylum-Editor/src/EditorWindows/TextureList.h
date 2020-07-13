@@ -4,12 +4,12 @@
 
 #include "EditorWindows/EditorWindow.h"
 
-class EntityList : public EditorWindow
+class TextureList : public EditorWindow
 {
 private:
-	Asylum::EntityData* mCurrentlySelectedEntityData;
+	Asylum::Ref<Asylum::Texture> mCurrentlySelectedTexture;
 public:
-	EntityList();
+	TextureList();
 
 	virtual void OnUpdate(float dt) override;
 };

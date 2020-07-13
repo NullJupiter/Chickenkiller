@@ -24,7 +24,7 @@ EditorLayer::EditorLayer()
 	// create windows
     mMainMenuWindow = Asylum::CreateScope<MainMenu>();
 	mViewportWindow = Asylum::CreateScope<Viewport>();
-    mEntityListWindow = Asylum::CreateScope<EntityList>();
+    mEntityListWindow = Asylum::CreateScope<TextureList>();
 }
 
 void EditorLayer::OnAttach()

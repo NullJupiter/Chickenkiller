@@ -8,7 +8,7 @@ namespace Asylum {
 		// data
 		std::unordered_map<std::string, Ref<Shader>> Shaders;
 		std::unordered_map<std::string, Ref<Texture>> Textures;
-		std::unordered_map<std::string, Ref<TextureAtlas>> TextureAtlases;
+		std::unordered_map<std::string, Ref<AnimationSheet>> AnimationSheets;
 		std::unordered_map<std::string, Ref<Animation>> Animations;
 	};
 
@@ -56,20 +56,20 @@ namespace Asylum {
 						sResouceManagerData.Textures[name] = CreateRef<Texture>(textureFilePath.c_str(), colorFormat);
 					}
 
-					// check if current subobject is under the category of "TextureAtlases"
-					if (key == "TextureAtlases")
+					// check if current subobject is under the category of "AnimationSheets"
+					if (key == "AnimationSheets")
 					{
 						// get parameter
-						std::string textureAtlasName = valueObject["name"].get<std::string>();
+						std::string animationSheetName = valueObject["name"].get<std::string>();
 						std::string textureFilePath = valueObject["file-path"].get<std::string>();
 						uint32_t colorFormat = valueObject["color-format"] == "RGBA" ? GL_RGBA : GL_RGB;
 						uint32_t rowCount = valueObject["row-count"].get<uint32_t>();
 						uint32_t columnCount = valueObject["column-count"].get<uint32_t>();
 
 						// create new texture atlas and store it in unordered_map
-						sResouceManagerData.TextureAtlases[textureAtlasName] = CreateRef<TextureAtlas>(textureFilePath.c_str(), colorFormat, rowCount, columnCount);
+						sResouceManagerData.AnimationSheets[animationSheetName] = CreateRef<AnimationSheet>(textureFilePath.c_str(), colorFormat, rowCount, columnCount);
 
-						// create all animations
+						// create all animations from animation sheet
 						for (auto& animation : valueObject["animations"])
 						{
 							// get parameters
@@ -79,8 +79,22 @@ namespace Asylum {
 							float frameTime = animation["frame-time"].get<float>();
 
 							// create new animation and store it in unordered_map
-							sResouceManagerData.Animations[animationName] = CreateRef<Animation>(GetTextureAtlas(textureAtlasName), animationRow, frameCount, frameTime);
+							sResouceManagerData.Animations[animationName] = CreateRef<Animation>(GetAnimationSheets(animationSheetName), animationRow, frameCount, frameTime);
 						}
+					}
+
+					// check if current subobject is under the category of "TextureAtlases"
+					if (key == "TextureAtlases")
+					{
+						/*// get parameter
+						std::string textureAtlasName = valueObject["name"].get<std::string>();
+						std::string textureFilePath = valueObject["file-path"].get<std::string>();
+						uint32_t colorFormat = valueObject["color-format"] == "RGBA" ? GL_RGBA : GL_RGB;
+						uint32_t rowCount = valueObject["row-count"].get<uint32_t>();
+						uint32_t columnCount = valueObject["column-count"].get<uint32_t>();
+
+						// create new texture atlas and store it in unordered_map
+						sResouceManagerData.TextureAtlases[textureAtlasName] = CreateRef<AnimationSheet>(textureFilePath.c_str(), colorFormat, rowCount, columnCount);*/
 					}
 				}
 			}
@@ -92,7 +106,7 @@ namespace Asylum {
 		// erase resource data
 		sResouceManagerData.Shaders.clear();
 		sResouceManagerData.Textures.clear();
-		sResouceManagerData.TextureAtlases.clear();
+		sResouceManagerData.AnimationSheets.clear();
 		sResouceManagerData.Animations.clear();
 	}
 
@@ -116,9 +130,14 @@ namespace Asylum {
 		return sResouceManagerData.Textures[name];
 	}
 
-	const Ref<TextureAtlas>& ResourceManager::GetTextureAtlas(const std::string& name)
+	const std::unordered_map<std::string, Ref<Texture>>& ResourceManager::GetAllTextureData()
 	{
-		return sResouceManagerData.TextureAtlases[name];
+		return sResouceManagerData.Textures;
+	}
+
+	const Ref<AnimationSheet>& ResourceManager::GetAnimationSheets(const std::string& name)
+	{
+		return sResouceManagerData.AnimationSheets[name];
 	}
 
 	const Ref<Animation>& ResourceManager::GetAnimation(const std::string& name)

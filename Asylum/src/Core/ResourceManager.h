@@ -17,8 +17,11 @@ namespace Asylum {
 		// getter
 		static const Ref<Shader>& GetShader(const std::string& name);
 		static std::vector<Ref<Shader>> GetAllShaders();
+
 		static const Ref<Texture>& GetTexture(const std::string& name);
-		static const Ref<TextureAtlas>& GetTextureAtlas(const std::string& name);
+		static const std::unordered_map<std::string, Ref<Texture>>& GetAllTextureData();
+
+		static const Ref<AnimationSheet>& GetAnimationSheets(const std::string& name);
 		static const Ref<Animation>& GetAnimation(const std::string& name);
 	};
 

@@ -20,15 +20,15 @@ namespace Asylum {
 		inline uint32_t GetID() const { return mTextureID; };
 	};
 
-	class TextureAtlas : public Texture
+	class AnimationSheet : public Texture
 	{
 	private:
 		uint32_t mRowCount;
 		uint32_t mColumnCount;
 	public:
-		TextureAtlas(const char* textureFilePath, uint32_t colorFormat, uint32_t rowCount, uint32_t columnCount)
+		AnimationSheet(const char* textureFilePath, uint32_t colorFormat, uint32_t rowCount, uint32_t columnCount)
 			: Texture(textureFilePath, colorFormat), mRowCount(rowCount), mColumnCount(columnCount) {};
-		~TextureAtlas() = default;
+		~AnimationSheet() = default;
 
 		inline uint32_t GetRowCount() const { return mRowCount; };
 		inline uint32_t GetColumnCount() const { return mColumnCount; };
