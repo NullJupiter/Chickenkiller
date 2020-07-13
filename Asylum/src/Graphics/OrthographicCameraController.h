@@ -31,6 +31,8 @@ namespace Asylum {
 		inline const glm::vec2& GetCameraPosition() const { return mCamera->GetPosition(); };
 		inline float GetCameraRotation() const { return mCamera->GetRotation(); };
 
+		inline const glm::mat4& GetViewMatrix() const { return mCamera->GetViewMatrix(); };
+		inline const glm::mat4& GetProjectionMatrix() const { return mCamera->GetProjectionMatrix(); };
 		inline const glm::mat4& GetViewProjectionMatrix() const { return mCamera->GetViewProjectionMatrix(); };
 
 		inline float GetZoomLevel() const { return mZoomLevel; };

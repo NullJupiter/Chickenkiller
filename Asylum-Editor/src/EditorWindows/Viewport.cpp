@@ -2,6 +2,7 @@
 
 #include <imgui.h>
 #include "ViewportCamera/ViewportCameraController.h"
+#include "EditorWindows/WindowStateManager.h"
 
 Viewport::Viewport()
 {
@@ -23,14 +24,14 @@ void Viewport::OnUpdate(float dt)
 	mIsActive = ImGui::IsWindowFocused();
 
 	// update size and projection matrix
-	ImVec2 windowSize = ImGui::GetContentRegionAvail();
-	if (windowSize.x != mSize.x || windowSize.y != mSize.y)
+	ImVec2 contentRegionSize = ImGui::GetContentRegionAvail();
+	if (contentRegionSize.x != mSize.x || contentRegionSize.y != mSize.y)
 	{
-		Asylum::Window::Get()->SetViewport(0, 0, (uint32_t)windowSize.x, (uint32_t)windowSize.y);
-		mViewportFB->Resize((uint32_t)windowSize.x, (uint32_t)windowSize.y);
+		Asylum::Window::Get()->SetViewport(0, 0, (uint32_t)contentRegionSize.x, (uint32_t)contentRegionSize.y);
+		mViewportFB->Resize((uint32_t)contentRegionSize.x, (uint32_t)contentRegionSize.y);
 
-		mSize.x = windowSize.x;
-		mSize.y = windowSize.y;
+		mSize.x = contentRegionSize.x;
+		mSize.y = contentRegionSize.y;
 	}
 
 
@@ -42,6 +43,20 @@ void Viewport::OnUpdate(float dt)
 	// update and render all entities
 	Asylum::EntitySystem::OnUpdate(dt);
 	Asylum::EntitySystem::OnRender();
+
+	Asylum::ResourceManager::GetShader("default")->Bind();
+	Asylum::Renderer::BeginDraw();
+
+	ImVec2& windowPos = ImGui::GetWindowPos();
+	ImVec2& windowSize = ImGui::GetWindowSize();
+	ImVec2& mousePos = ImGui::GetMousePos();
+	glm::vec2 relMousePos = { mousePos.x - windowPos.x, mousePos.y - windowPos.y - 18.0f };
+	glm::vec2 mouseWorldPosition = Asylum::Utils::Raycast::CastMousePosition(relMousePos, *(glm::vec2*)&windowSize);
+
+	//glm::vec2 roundedPos = { round(rayWorldSpace.x), round(rayWorldSpace.y) };
+	Asylum::Renderer::DrawRectangle(mouseWorldPosition, { 1,1 }, WindowStateManager::GetSelectedTexture());
+
+	Asylum::Renderer::EndDraw();
 
 	// stop rendering to viewport
 	Asylum::Renderer::UnbindFramebuffer();

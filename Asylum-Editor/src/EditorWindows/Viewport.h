@@ -12,8 +12,10 @@ private:
 
 	glm::vec2 mSize;
 	Asylum::Ref<Asylum::Framebuffer> mViewportFB;
+
+	Asylum::Ref<Asylum::Texture> mSelectedTexture;
 public:
 	Viewport();
-	
+
 	void OnUpdate(float dt);
 };

@@ -6,8 +6,6 @@
 
 class TextureList : public EditorWindow
 {
-private:
-	Asylum::Ref<Asylum::Texture> mCurrentlySelectedTexture;
 public:
 	TextureList();
 
