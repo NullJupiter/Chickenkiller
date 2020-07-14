@@ -53,7 +53,8 @@ void Viewport::OnUpdate(float dt)
 	glm::vec2 relMousePos = { mousePos.x - windowPos.x, mousePos.y - windowPos.y - 18.0f };
 	glm::vec2 mouseWorldPosition = Asylum::Utils::Raycast::CastMousePosition(relMousePos, *(glm::vec2*)&windowSize);
 
-	//glm::vec2 roundedPos = { round(rayWorldSpace.x), round(rayWorldSpace.y) };
+	if (WindowStateManager::IsGridOn())
+		mouseWorldPosition = { round(mouseWorldPosition.x), round(mouseWorldPosition.y) };
 	Asylum::Renderer::DrawRectangle(mouseWorldPosition, { 1,1 }, WindowStateManager::GetSelectedTexture());
 
 	Asylum::Renderer::EndDraw();

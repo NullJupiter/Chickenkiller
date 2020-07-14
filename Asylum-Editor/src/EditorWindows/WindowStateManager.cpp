@@ -2,6 +2,8 @@
 
 struct WindowStateManagerData
 {
+	bool IsGridOn = false;
+
 	Asylum::Ref<Asylum::Texture> CurrentlySelectedTexture = nullptr;
 };
 static WindowStateManagerData sData;
@@ -20,4 +22,14 @@ void WindowStateManager::SetSelectedTexture(const Asylum::Ref<Asylum::Texture>& 
 const Asylum::Ref<Asylum::Texture>& WindowStateManager::GetSelectedTexture()
 {
 	return sData.CurrentlySelectedTexture;
+}
+
+bool WindowStateManager::IsGridOn()
+{
+	return sData.IsGridOn;
+}
+
+void WindowStateManager::IsGridOn(bool newGridState)
+{
+	sData.IsGridOn = newGridState;
 }

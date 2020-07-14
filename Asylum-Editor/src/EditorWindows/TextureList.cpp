@@ -10,7 +10,7 @@ TextureList::TextureList()
 
 void TextureList::OnUpdate(float dt)
 {
-	ImGui::Begin("Entity List");
+	ImGui::Begin("Textures");
 
 	const std::unordered_map<std::string, Asylum::Ref<Asylum::Texture>>& textures = Asylum::ResourceManager::GetAllTextureData();
 	for (auto& textureData : textures)
@@ -19,6 +19,10 @@ void TextureList::OnUpdate(float dt)
 			WindowStateManager::SetSelectedTexture(textureData.second);
 		ImGui::Text(textureData.first.c_str());
 	}
+
+	static bool gridState = false;
+	ImGui::Checkbox("Toggle Grid", &gridState);
+	WindowStateManager::IsGridOn(gridState);
 
 	ImGui::End();
 }
