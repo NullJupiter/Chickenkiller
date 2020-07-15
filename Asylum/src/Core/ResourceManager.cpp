@@ -50,10 +50,9 @@ namespace Asylum {
 						// get parameters
 						std::string name = valueObject["name"].get<std::string>();
 						std::string textureFilePath = valueObject["file-path"].get<std::string>();
-						uint32_t colorFormat = valueObject["color-format"] == "RGBA" ? GL_RGBA : GL_RGB;
 
 						// create new shader and store it in unordered_map
-						sResouceManagerData.Textures[name] = CreateRef<Texture>(textureFilePath.c_str(), colorFormat);
+						sResouceManagerData.Textures[name] = CreateRef<Texture>(textureFilePath.c_str());
 					}
 
 					// check if current subobject is under the category of "AnimationSheets"
@@ -62,12 +61,11 @@ namespace Asylum {
 						// get parameter
 						std::string animationSheetName = valueObject["name"].get<std::string>();
 						std::string textureFilePath = valueObject["file-path"].get<std::string>();
-						uint32_t colorFormat = valueObject["color-format"] == "RGBA" ? GL_RGBA : GL_RGB;
 						uint32_t rowCount = valueObject["row-count"].get<uint32_t>();
 						uint32_t columnCount = valueObject["column-count"].get<uint32_t>();
 
 						// create new texture atlas and store it in unordered_map
-						sResouceManagerData.AnimationSheets[animationSheetName] = CreateRef<AnimationSheet>(textureFilePath.c_str(), colorFormat, rowCount, columnCount);
+						sResouceManagerData.AnimationSheets[animationSheetName] = CreateRef<AnimationSheet>(textureFilePath.c_str(), rowCount, columnCount);
 
 						// create all animations from animation sheet
 						for (auto& animation : valueObject["animations"])
