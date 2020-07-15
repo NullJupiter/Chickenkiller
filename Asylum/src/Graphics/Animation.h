@@ -31,7 +31,7 @@ namespace Asylum {
 		void OnUpdate(float dt);
 
 		// getter
-		inline uint32_t GetTextureID() const { return mCorrespondingAnimationSheet->GetID(); };
+		inline const Ref<AnimationSheet>& GetAnimationSheet() const { return mCorrespondingAnimationSheet; };
 		inline const std::array<glm::vec2, 4>& GetCurrentTextureCoords() const { return mCurrentTextureCoords; };
 	private:
 		void UpdateTextureCoords();

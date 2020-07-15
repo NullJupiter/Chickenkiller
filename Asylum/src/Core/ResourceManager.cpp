@@ -79,7 +79,7 @@ namespace Asylum {
 							float frameTime = animation["frame-time"].get<float>();
 
 							// create new animation and store it in unordered_map
-							sResouceManagerData.Animations[animationName] = CreateRef<Animation>(GetAnimationSheets(animationSheetName), animationRow, frameCount, frameTime);
+							sResouceManagerData.Animations[animationName] = CreateRef<Animation>(GetAnimationSheet(animationSheetName), animationRow, frameCount, frameTime);
 						}
 					}
 
@@ -135,7 +135,7 @@ namespace Asylum {
 		return sResouceManagerData.Textures;
 	}
 
-	const Ref<AnimationSheet>& ResourceManager::GetAnimationSheets(const std::string& name)
+	const Ref<AnimationSheet>& ResourceManager::GetAnimationSheet(const std::string& name)
 	{
 		return sResouceManagerData.AnimationSheets[name];
 	}
@@ -143,6 +143,11 @@ namespace Asylum {
 	const Ref<Animation>& ResourceManager::GetAnimation(const std::string& name)
 	{
 		return sResouceManagerData.Animations[name];
+	}
+
+	const std::unordered_map<std::string, Ref<Animation>>& ResourceManager::GetAllAnimationData()
+	{
+		return sResouceManagerData.Animations;
 	}
 
 }

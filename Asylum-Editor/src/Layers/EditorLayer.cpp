@@ -25,7 +25,7 @@ EditorLayer::EditorLayer()
 	// create windows
     mMainMenuWindow = Asylum::CreateScope<MainMenu>();
 	mViewportWindow = Asylum::CreateScope<Viewport>();
-    mTextureListWindow = Asylum::CreateScope<TextureList>();
+    mResourceTreeWindow = Asylum::CreateScope<ResourceTree>();
 }
 
 void EditorLayer::OnAttach()
@@ -57,7 +57,7 @@ void EditorLayer::OnUpdate(float dt)
 	// update all imgui windows
     mMainMenuWindow->OnUpdate(dt);
 	mViewportWindow->OnUpdate(dt);
-    mTextureListWindow->OnUpdate(dt);
+    mResourceTreeWindow->OnUpdate(dt);
 
     // end dockspace
     ImGui::End();

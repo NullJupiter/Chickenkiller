@@ -4,10 +4,10 @@
 
 #include "EditorWindows/EditorWindow.h"
 
-class TextureList : public EditorWindow
+class ResourceTree : public EditorWindow
 {
 public:
-	TextureList();
+	ResourceTree();
 
 	virtual void OnUpdate(float dt) override;
 };

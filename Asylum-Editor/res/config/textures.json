@@ -1,21 +1,41 @@
 {
-    "Textures": [
-        {
-            "name": "test-texture",
-            "file-path": "res/textures/testTexture.png",
-            "color-format": "RGBA"
-        },
-      {
-        "name": "test-texture2",
-        "file-path": "res/textures/baum.png",
-        "color-format": "RGBA"
-      },
-      {
-        "name": "unknown",
-        "file-path": "res/textures/unknown.png",
-        "color-format": "RGB"
-      }
-    ],
+  "Textures": [
+    {
+      "name": "test-texture",
+      "file-path": "res/textures/testTexture.png",
+      "color-format": "RGBA"
+    },
+    {
+      "name": "test-texture2",
+      "file-path": "res/textures/baum.png",
+      "color-format": "RGBA"
+    },
+    {
+      "name": "test-texture3",
+      "file-path": "res/textures/baum.png",
+      "color-format": "RGBA"
+    },
+    {
+      "name": "test-texture4",
+      "file-path": "res/textures/baum.png",
+      "color-format": "RGBA"
+    },
+    {
+      "name": "test-texture5",
+      "file-path": "res/textures/baum.png",
+      "color-format": "RGBA"
+    },
+    {
+      "name": "test-texture6",
+      "file-path": "res/textures/baum.png",
+      "color-format": "RGBA"
+    },
+    {
+      "name": "unknown",
+      "file-path": "res/textures/unknown.png",
+      "color-format": "RGB"
+    }
+  ],
     "AnimationSheets": [
         {
             "name": "test-texture-atlas",

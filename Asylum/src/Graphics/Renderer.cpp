@@ -221,7 +221,7 @@ namespace Asylum {
 	void Renderer::AssignVerticesToBuffer(float textureIndex, const glm::vec2& position, const glm::vec2& size, const glm::vec4& tint, const std::array<glm::vec2, 4>& textureCoords, float angle)
 	{
 		// convert the tint color from rgb 0-255 to 0-1
-		const glm::vec4 rectTint = { tint.r / 255.0f, tint.g / 255.0f, tint.b / 255.0f, 1.0f };
+		const glm::vec4 rectTint = { tint.r / 255.0f, tint.g / 255.0f, tint.b / 255.0f, tint.a / 255.0f };
 
 		// create a transformation matrix
 		glm::mat4 transform = glm::translate(glm::mat4(1.0f), { position.x, position.y, 0.0f });
@@ -276,7 +276,7 @@ namespace Asylum {
 	void Renderer::DrawRectangle(const glm::vec2& position, const glm::vec2& size, const Ref<Animation>& animation, const glm::vec4& tint, float angle)
 	{
 		FullBufferCheck();
-		AssignVerticesToBuffer(TextureChecks(animation->GetTextureID()), position, size, tint, animation->GetCurrentTextureCoords(), angle);
+		AssignVerticesToBuffer(TextureChecks(animation->GetAnimationSheet()->GetID()), position, size, tint, animation->GetCurrentTextureCoords(), angle);
 	}
 
 }
