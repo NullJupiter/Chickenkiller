@@ -7,6 +7,29 @@ namespace Asylum {
 
 	Texture::Texture(const char* textureFilePath)
 	{
+		// load the texture data
+		stbi_set_flip_vertically_on_load(true);
+		unsigned char* data = stbi_load(textureFilePath, &mWidth, &mHeight, &mNrOfChannels, 0);
+
+		CreateTexture(data);
+
+		// cleanup
+		stbi_image_free(data);
+	}
+
+	Texture::Texture(unsigned char* data, uint32_t width, uint32_t height, uint32_t channels)
+		: mWidth(width), mHeight(height), mNrOfChannels(channels)
+	{
+		CreateTexture(data);
+	}
+
+	Texture::~Texture() 
+	{
+		glDeleteTextures(1, &mTextureID);
+	}
+
+	void Texture::CreateTexture(unsigned char* data, const std::string& textureFilePath)
+	{
 		// generate texture
 		glGenTextures(1, &mTextureID);
 		glBindTexture(GL_TEXTURE_2D, mTextureID);
@@ -16,10 +39,6 @@ namespace Asylum {
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 		glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-		// load the texture data
-		stbi_set_flip_vertically_on_load(true);
-		unsigned char* data = stbi_load(textureFilePath, &mWidth, &mHeight, &mNrOfChannels, 0);
 
 		// check color formats
 		uint32_t internalFormat = 0, dataFormat = 0;
@@ -34,22 +53,12 @@ namespace Asylum {
 			dataFormat = GL_RGB;
 		}
 
-		assert(internalFormat & dataFormat);
-
-		if (data) {
+		if (data && internalFormat != 0 && dataFormat != 0) {
 			glTexImage2D(GL_TEXTURE_2D, 0, internalFormat, mWidth, mHeight, 0, dataFormat, GL_UNSIGNED_BYTE, data);
 		}
 		else {
 			LOG("Could not load texture! (filepath: " << textureFilePath << ")");
 		}
-
-		// cleanup
-		stbi_image_free(data);
-	}
-
-	Texture::~Texture() 
-	{
-		glDeleteTextures(1, &mTextureID);
 	}
 
 }

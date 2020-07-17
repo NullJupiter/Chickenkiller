@@ -13,10 +13,11 @@ Player::Player(const glm::vec2& position, const glm::vec2& size)
 {
 	mSpeed = 3.0f;
 
-	mAnimations.push_back(Asylum::ResourceManager::GetAnimation("player-up"));
-	mAnimations.push_back(Asylum::ResourceManager::GetAnimation("player-down"));
-	mAnimations.push_back(Asylum::ResourceManager::GetAnimation("player-left"));
-	mAnimations.push_back(Asylum::ResourceManager::GetAnimation("player-right"));
+	const Asylum::Ref<Asylum::AnimationSheet>& animationSheet = Asylum::ResourceManager::GetAnimationSheet("player-animation-sheet");
+	mAnimations.push_back(animationSheet->GetAnimation("player-up"));
+	mAnimations.push_back(animationSheet->GetAnimation("player-down"));
+	mAnimations.push_back(animationSheet->GetAnimation("player-left"));
+	mAnimations.push_back(animationSheet->GetAnimation("player-right"));
 
 	mCurrentAnimation = mAnimations[Animations::PlayerDown];
 

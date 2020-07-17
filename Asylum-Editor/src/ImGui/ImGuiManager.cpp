@@ -5,6 +5,15 @@
 #include "examples/imgui_impl_glfw.cpp"
 #include "examples/imgui_impl_opengl3.cpp"
 
+struct ImGuiManagerData
+{
+    ImFont* RegularFont;
+    ImFont* MediumFont;
+    Asylum::Ref<Asylum::Texture> RegularFontTexture;
+    Asylum::Ref<Asylum::Texture> MediumFontTexture;
+};
+static ImGuiManagerData sData;
+
 void ImGuiManager::Init()
 {
     // Setup imgui
@@ -36,6 +45,8 @@ void ImGuiManager::Init()
 
     // Set custom imgui style
     SetStyle();
+
+    CreateFonts(15.0f);
 }
 
 void ImGuiManager::Shutdown()
@@ -46,16 +57,41 @@ void ImGuiManager::Shutdown()
     ImGui::DestroyContext();
 }
 
+void ImGuiManager::CreateFonts(float size)
+{
+    // load fonts
+    ImGuiIO& io = ImGui::GetIO();
+    unsigned char* pixels;
+    int width, height, bytes_per_pixels;
+
+    // load and create regular font
+    sData.RegularFont = io.Fonts->AddFontFromFileTTF("res/fonts/Roboto-Regular.ttf", size);
+    io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height, &bytes_per_pixels);
+    sData.RegularFontTexture = Asylum::CreateRef<Asylum::Texture>(pixels, width, height, bytes_per_pixels);
+    io.Fonts->SetTexID((void*)sData.RegularFontTexture->GetID());
+
+    // load and create medium font
+    sData.MediumFont = io.Fonts->AddFontFromFileTTF("res/fonts/Roboto-Medium.ttf", size);
+    io.Fonts->GetTexDataAsRGBA32(&pixels, &width, &height, &bytes_per_pixels);
+    sData.MediumFontTexture = Asylum::CreateRef<Asylum::Texture>(pixels, width, height, bytes_per_pixels);
+    io.Fonts->SetTexID((void*)sData.MediumFontTexture->GetID());
+}
+
 void ImGuiManager::Begin()
 {
     // Start the Dear ImGui frame
     ImGui_ImplOpenGL3_NewFrame();
     ImGui_ImplGlfw_NewFrame();
     ImGui::NewFrame();
+
+    // Push Custom Font
+    ImGui::PushFont(sData.RegularFont);
 }
 
 void ImGuiManager::End()
 {
+    ImGui::PopFont();
+
     ImGui::Render();
     ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
@@ -125,14 +161,14 @@ void ImGuiManager::SetStyle()
     colors[ImGuiCol_NavWindowingDimBg] = ImVec4(0.000f, 0.000f, 0.000f, 0.586f);
     colors[ImGuiCol_ModalWindowDimBg] = ImVec4(0.000f, 0.000f, 0.000f, 0.586f);
 
-    style->ChildRounding = 4.0f;
-    style->FrameBorderSize = 1.0f;
-    style->FrameRounding = 2.0f;
+    style->ChildRounding = 0.0f;
+    style->FrameBorderSize = 0.0f;
+    style->FrameRounding = 0.0f;
     style->GrabMinSize = 7.0f;
-    style->PopupRounding = 2.0f;
-    style->ScrollbarRounding = 12.0f;
+    style->PopupRounding = 0.0f;
+    style->ScrollbarRounding = 0.0f;
     style->ScrollbarSize = 13.0f;
-    style->TabBorderSize = 1.0f;
+    style->TabBorderSize = 0.0f;
     style->TabRounding = 0.0f;
-    style->WindowRounding = 4.0f;
+    style->WindowRounding = 0.0f;
 }

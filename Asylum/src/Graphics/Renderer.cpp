@@ -276,7 +276,7 @@ namespace Asylum {
 	void Renderer::DrawRectangle(const glm::vec2& position, const glm::vec2& size, const Ref<Animation>& animation, const glm::vec4& tint, float angle)
 	{
 		FullBufferCheck();
-		AssignVerticesToBuffer(TextureChecks(animation->GetAnimationSheet()->GetID()), position, size, tint, animation->GetCurrentTextureCoords(), angle);
+		AssignVerticesToBuffer(TextureChecks(animation->GetAnimationSheetID()), position, size, tint, animation->GetCurrentTextureCoords(), angle);
 	}
 
 }

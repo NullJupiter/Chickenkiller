@@ -2,20 +2,13 @@
     "Textures": [
         {
             "name": "test-texture",
-            "file-path": "res/textures/testTexture.png",
-            "color-format": "RGBA"
-        }, 
-        {
-            "name": "test-texture2",
-            "file-path": "res/textures/logo2.png",
-            "color-format": "RGBA"
+            "file-path": "res/textures/testTexture.png"
         }
     ],
     "AnimationSheets": [
         {
-            "name": "test-texture-atlas",
+            "name": "player-animation-sheet",
             "file-path": "res/textures/testSpriteSheet.png",
-            "color-format": "RGBA",
             "row-count": 4,
             "column-count": 9,
 

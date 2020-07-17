@@ -3,19 +3,14 @@
 
 namespace Asylum {
 	
-	Animation::Animation(const Ref<AnimationSheet>& correspondingAnimationSheet, uint32_t animationRow, uint32_t frameCount, float frameTime)
-		: mCorrespondingAnimationSheet(correspondingAnimationSheet), mAnimationRow(animationRow), mFrameCount(frameCount), mFrameTime(frameTime)
+	Animation::Animation(uint32_t animationSheetID, const glm::vec2& animationSheetSize, float rowCount, float columnCount, uint32_t animationRow, uint32_t frameCount, float frameTime)
+		: mAnimationSheetID(animationSheetID), mTextureSize(animationSheetSize), mAnimationRow(animationRow), mFrameCount(frameCount), mFrameTime(frameTime)
 	{
 		mCurrentFrame = 0;
 		mTimeSinceLastFrame = 0.0f;
 
-		mTextureSize = { mCorrespondingAnimationSheet->GetWidth(), mCorrespondingAnimationSheet->GetHeight() };
-		
-		uint32_t textureRows = mCorrespondingAnimationSheet->GetRowCount();
-		uint32_t textureColumns = mCorrespondingAnimationSheet->GetColumnCount();
-
-		mFrameSize.x = (float)mTextureSize.x / textureColumns;
-		mFrameSize.y = (float)mTextureSize.y / textureRows;
+		mFrameSize.x = (float)mTextureSize.x / columnCount;
+		mFrameSize.y = (float)mTextureSize.y / rowCount;
 
 		UpdateTextureCoords();
 	}

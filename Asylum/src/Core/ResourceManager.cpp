@@ -9,7 +9,6 @@ namespace Asylum {
 		std::unordered_map<std::string, Ref<Shader>> Shaders;
 		std::unordered_map<std::string, Ref<Texture>> Textures;
 		std::unordered_map<std::string, Ref<AnimationSheet>> AnimationSheets;
-		std::unordered_map<std::string, Ref<Animation>> Animations;
 	};
 
 	static ResourceManagerData sResouceManagerData;
@@ -76,8 +75,8 @@ namespace Asylum {
 							uint32_t frameCount = animation["frame-count"].get<uint32_t>();
 							float frameTime = animation["frame-time"].get<float>();
 
-							// create new animation and store it in unordered_map
-							sResouceManagerData.Animations[animationName] = CreateRef<Animation>(GetAnimationSheet(animationSheetName), animationRow, frameCount, frameTime);
+							// create new animation and add it to the corresponding animation sheet
+							sResouceManagerData.AnimationSheets[animationSheetName]->AddNewAnimation(animationName, animationRow, frameCount, frameTime);
 						}
 					}
 
@@ -105,7 +104,6 @@ namespace Asylum {
 		sResouceManagerData.Shaders.clear();
 		sResouceManagerData.Textures.clear();
 		sResouceManagerData.AnimationSheets.clear();
-		sResouceManagerData.Animations.clear();
 	}
 
 	const Ref<Shader>& ResourceManager::GetShader(const std::string& name)
@@ -138,14 +136,9 @@ namespace Asylum {
 		return sResouceManagerData.AnimationSheets[name];
 	}
 
-	const Ref<Animation>& ResourceManager::GetAnimation(const std::string& name)
+	const std::unordered_map<std::string, Ref<AnimationSheet>>& ResourceManager::GetAllAnimationSheetData()
 	{
-		return sResouceManagerData.Animations[name];
-	}
-
-	const std::unordered_map<std::string, Ref<Animation>>& ResourceManager::GetAllAnimationData()
-	{
-		return sResouceManagerData.Animations;
+		return sResouceManagerData.AnimationSheets;
 	}
 
 }

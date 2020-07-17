@@ -22,8 +22,7 @@ namespace Asylum {
 		static const std::unordered_map<std::string, Ref<Texture>>& GetAllTextureData();
 
 		static const Ref<AnimationSheet>& GetAnimationSheet(const std::string& name);
-		static const Ref<Animation>& GetAnimation(const std::string& name);
-		static const std::unordered_map<std::string, Ref<Animation>>& GetAllAnimationData();
+		static const std::unordered_map<std::string, Ref<AnimationSheet>>& GetAllAnimationSheetData();
 	};
 
 }
