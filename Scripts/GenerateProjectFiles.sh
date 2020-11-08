@@ -1,1 +1,1 @@
-../vendor/binaries/premake/premake5 xcode4
+vendor/binaries/premake/premake5 xcode4
