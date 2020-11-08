@@ -24,7 +24,7 @@ namespace Asylum {
 		LayerStack* mLayerStack;
 	public:
 		Application(const std::string& applicationName) { Init(applicationName); };
-		~Application() { Shutdown(); };
+		virtual ~Application() { Shutdown(); };
 
 		void Init(const std::string& applicationName);
 		void Shutdown();

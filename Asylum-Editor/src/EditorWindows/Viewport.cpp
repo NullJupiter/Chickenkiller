@@ -47,9 +47,9 @@ void Viewport::OnUpdate(float dt)
 	Asylum::ResourceManager::GetShader("default")->Bind();
 	Asylum::Renderer::BeginDraw();
 
-	ImVec2& windowPos = ImGui::GetWindowPos();
-	ImVec2& windowSize = ImGui::GetWindowSize();
-	ImVec2& mousePos = ImGui::GetMousePos();
+    ImVec2 windowPos = ImGui::GetWindowPos();
+	ImVec2 windowSize = ImGui::GetWindowSize();
+	ImVec2 mousePos = ImGui::GetMousePos();
 	glm::vec2 relMousePos = { mousePos.x - windowPos.x, mousePos.y - windowPos.y - 18.0f };
 	glm::vec2 mouseWorldPosition = Asylum::Utils::Raycast::CastMousePosition(relMousePos, *(glm::vec2*)&windowSize);
 

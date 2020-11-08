@@ -1,6 +1,8 @@
 #pragma once
 
 #include <string>
+#include <vector>
+#include <functional>
 
 #include <GLFW/glfw3.h>
 
@@ -34,7 +36,7 @@ namespace Asylum {
 			bool IsClosed = false;
 
 			// event callbacks
-			std::vector<std::function<void(float, float)>> ScrollCallbacks;
+            std::vector<std::function<void(float, float)>> ScrollCallbacks;
 			std::vector<std::function<void(int)>> KeyPressedCallbacks;
 			std::vector<std::function<void(int, int)>> WindowResizeCallbacks;
 		};
